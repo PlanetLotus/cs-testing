@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Template Selector | Automated Testing</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="css/testing.css">
+        <link rel="stylesheet" href="css/bootstrap.min.css">
+        <link rel="stylesheet" href="css/bootstrap-theme.min.css">
+
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+        <script src="../../assets/js/html5shiv.js"></script>
+        <script src="../../assets/js/respond.min.js"></script>
+        <![endif]-->
+    </head>
+    <body>
+
+    <div class="container-fluid">
+        <div class="row-fluid">
+            <div class="span3">
+                <center><img id="ajax-image" src="img/ajax.gif" style="display:none" /></center>
+                <center><img id="ajax-image-static" src="img/ajax-static.gif" /></center>
+            </div>
+
+            <div class="span9" id="content"></div>
+        </div>
+    </div>
+
+    <!-- Handlebars Templates -->
+
+    <!-- JavaScript includes -->
+    <script type="text/javascript" src="js/jquery.js"></script>
+    <script type="text/javascript" src="js/json2.js"></script>
+    <script type="text/javascript" src="js/underscore.js"></script>
+    <script type="text/javascript" src="js/backbone.js"></script>
+    <script type="text/javascript" src="js/handlebars.js"></script>
+    <script type="text/javascript" src="js/bootstrap.min.js"></script>
+
+    <script>
+        /* Ajax loading wheel */
+        $('#ajax-image')
+            .hide()
+            .ajaxStart(function() {
+                $(this).show();
+            })
+            .ajaxStop(function() {
+                $(this).hide();
+            })
+        ;
+        $('#ajax-image-static')
+            .hide()
+            .ajaxStart(function() {
+                $(this).hide();
+            })
+            .ajaxStop(function() {
+                $(this).show();
+            })
+        ;
+    </script>
+
+    <!-- Load Backbone.js Application --!>
+    <script>
+        $.ajax({
+            url: 'js/app.js',
+            dataType: 'script',
+            error: function() {
+                /* This is going to force the user to relogin if they have a
+                 *  cached version and are not logged into CAS */
+                //window.location.reload(true);
+            }
+        });
+    </script>
+  </body>
+</html>
