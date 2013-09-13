@@ -26,6 +26,20 @@
         },
         render: function() {
             $(this.el).html(templateLoaderTpl());
+        },
+        events: {
+            'click .templateSelect': 'selectTemplate'
+        },
+        selectTemplate: function(e) {
+            // Don't navigate to link
+            e.preventDefault();
+
+            // Clear previous selection
+            // ! Clears all tds...make sure there are no other tables on the page !
+            $('td').removeClass('success');
+
+            // Select template
+            $(e.target).closest('td').addClass('success');
         }
     });
 
