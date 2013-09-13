@@ -16,12 +16,30 @@
     var templateLoaderTpl = Handlebars.compile(templateLoaderSrc);
 
     /*
+     * Models
+     */
+    var Template = Backbone.Model.extend({
+        idAttribute: 'filename'
+    });
+
+    /*
+     * Collections
+     */
+    var TemplateCollection = Backbone.Collection.extend({
+        url: baseUrl + 'json/templates/',
+        model: Template
+    });
+
+    /*
      * Views
      */
     var TemplateLoaderView = Backbone.View.extend({
         el: '#content',
         templateLoaderTpl: templateLoaderTpl,
         initialize: function() {
+            // Load templates
+
+
             this.render();
         },
         render: function() {

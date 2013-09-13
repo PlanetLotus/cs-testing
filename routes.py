@@ -4,6 +4,7 @@ Bottle routes
 import json
 import os
 
+import util
 from bottle import abort, request, route, static_file
 
 # Static file paths
@@ -13,6 +14,9 @@ IMG = os.path.join(os.path.dirname(__file__), 'img')
 JS = os.path.join(os.path.dirname(__file__), 'js')
 TEMPLATES = os.path.join(os.path.dirname(__file__), 'templates')
 
+#
+# Static file routes
+#
 @route('/testing/')
 def automated_testing():
     """ Serves index file """
@@ -42,3 +46,16 @@ def js(filename):
 def css(filename):
     """ Serves all template files """
     return static_file(filename, root=TEMPLATES)
+
+#
+# Dynamic routes
+#
+@route('/testing/json/templates/')
+def templates():
+    """ Returns all JSON templates. """
+    pass
+
+@route('/testing/json/add-template/', method="POST")
+def templates():
+    """ Convert template into JSON and write to file. """
+    pass

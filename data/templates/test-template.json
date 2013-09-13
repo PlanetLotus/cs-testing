@@ -1,0 +1,1 @@
+{"filename": "test-template", "review_params": [true, false, false], "instructor_files": ["file1.adb", "file1.ads"], "diff_file": ["diffscript.txt"], "key": "mykey.txt", "required_files": ["file1.adb", "file1.ads"], "input": "myinputscript.txt"}
