@@ -15,21 +15,88 @@
     </head>
     <body>
 
-    <div class="container-fluid">
-        <div class="row-fluid">
-            <div class="span3">
+    <div class="container">
+        <div class="row">
+            <div>
                 <center><img id="ajax-image" src="img/ajax.gif" style="display:none" /></center>
                 <center><img id="ajax-image-static" src="img/ajax-static.gif" /></center>
             </div>
+        </div>
 
-            <div class="span9" id="content"></div>
+        <div class="row">
+            <div class="col-md-12" id="content"></div>
         </div>
     </div>
 
     <!-- Handlebars Templates -->
     <script id="template-loader-template" type="text/x-handlebars-template">
         <div class="container">
-            <h2>Test</h2>
+            <div class="row">
+                <div class="col-md-3" style="min-height:650px">
+                    <h2>Load Template</h2>
+
+                    <table class="table table-bordered table-hover">
+                        <!-- For each template, create a row and cell... -->
+                        <tr>
+                            <td colspan="2"><a href="#" style="text-decoration:none; color:#333">Template 1</a></td>
+                        </tr>
+                        <tr>
+                            <td colspan="2"><a href="#" style="text-decoration:none; color:#333">Template 2</td>
+                        </tr>
+                    </table>
+
+                    <button type="button" class="btn btn-default">Edit Template</button>
+                    <button type="button" class="btn btn-primary">Load Template</button>
+                </div>
+
+                <div class="col-md-9">
+                    <h2>Create Template</h2>
+
+                    <form role="form">
+                        <h3>Expected Output</h3>
+                        <div class="form-group">
+                            <label for="input-script">Upload Input Script</label>
+                            <input type="file" id="input-script">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="output-key">Upload Output Key</label>
+                            <input type="file" id="output-key">
+                        </div>
+
+                        <h3>Instructor Compilation Files <small>(batch upload)</small></h3>
+                        <div class="form-group">
+                            <label for="compilation-files">Upload Compile File(s)</label>
+                            <input type="file" id="compilation-files" multiple>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="required-files"><h3>Files Required for Compilation <small>(comma-separated)</small></h3></label>
+                            <br>
+                            <textarea id="required-files" cols="40" rows="5"></textarea>
+                        </div>
+
+                        <h3>File to be diffed with student's code</h3>
+                        <div class="form-group">
+                            <label for="diff-file">Upload Diff File</label>
+                            <input type="file" id="diff-file" style="margin-bottom:5px">
+                        </div>
+
+                        <h3>Code Review Parameters</h3>
+                        <div class="checkbox">
+                            <label><input type="checkbox">Check for descriptive non-integer variable names</label>
+                        </div>
+                        <div class="checkbox">
+                            <label><input type="checkbox">Check for comments describing functions and variable declarations</label>
+                        </div>
+                        <div class="checkbox">
+                            <label><input type="checkbox">Check for indentation</label>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary">Save Template</button>
+                    </form>
+                </div>
+            </div>
         </div>
     </script>
 
