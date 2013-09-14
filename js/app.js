@@ -38,12 +38,25 @@
         templateLoaderTpl: templateLoaderTpl,
         initialize: function() {
             // Load templates
-
-
-            this.render();
+            var that = this;
+            this.templateList = new TemplateCollection();
+            this.templateList.fetch({
+                success: function() {
+                    that.render();
+                },
+                error: function() {
+                    console.log('Failed to load templates.');
+                    return;
+                }
+            });
         },
         render: function() {
-            $(this.el).html(templateLoaderTpl());
+            // Set up template context
+            var context = {templates: this.templateList.models};
+            console.log(context);
+
+            // Write template with context to page
+            $(this.el).html(templateLoaderTpl(context));
         },
         events: {
             'click .templateSelect': 'selectTemplate'

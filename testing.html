@@ -37,12 +37,11 @@
 
                     <table class="table table-bordered table-hover">
                         <!-- For each template, create a row and cell... -->
+                        {{#each templates}}
                         <tr>
-                            <td colspan="2"><a class="templateSelect" href="#" style="text-decoration:none; color:#333">Template 1</a></td>
+                            <td><a class="templateSelect" href="#" style="text-decoration:none; color:#333">{{attributes.filename}}</a></td>
                         </tr>
-                        <tr>
-                            <td colspan="2"><a class="templateSelect" href="#" style="text-decoration:none; color:#333">Template 2</td>
-                        </tr>
+                        {{/each}}
                     </table>
 
                     <button type="button" class="btn btn-default">Edit Template</button>
