@@ -4,15 +4,15 @@ Bottle routes
 import json
 import os
 
-import util
+from util import *
 from bottle import abort, request, route, static_file
 
 # Static file paths
-CLASSES = os.path.join(os.path.dirname(__file__), 'classes')
+CLASSES = os.path.join(os.path.dirname(__file__), 'data/classes')
 CSS = os.path.join(os.path.dirname(__file__), 'css')
 IMG = os.path.join(os.path.dirname(__file__), 'img')
 JS = os.path.join(os.path.dirname(__file__), 'js')
-TEMPLATES = os.path.join(os.path.dirname(__file__), 'templates')
+TEMPLATES = os.path.join(os.path.dirname(__file__), 'data/templates')
 
 #
 # Static file routes
@@ -53,7 +53,21 @@ def css(filename):
 @route('/testing/json/templates/')
 def templates():
     """ Returns all JSON templates. """
-    pass
+
+    templates = []
+    for root, dirs, files in os.walk(TEMPLATES):
+        for f in files:
+            if f.endswith('.json'):
+                # Open file
+                data_file = open(os.path.join(root, f))
+
+                # Append JSON to templates
+                templates.append(json.load(data_file))
+
+                # Close file
+                data_file.close()
+
+    return to_json(templates)
 
 @route('/testing/json/add-template/', method="POST")
 def templates():
