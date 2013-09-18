@@ -51,45 +51,45 @@
                 <div class="col-md-9">
                     <h2>Create Template</h2>
 
-                    <form role="form">
+                    <form id="template-form" role="form" enctype="multipart/form-data">
                         <h3>Expected Output</h3>
                         <div class="form-group">
                             <label for="input-script">Upload Input Script</label>
-                            <input type="file" id="input-script">
+                            <input type="file" id="input-script" name="script">
                         </div>
 
                         <div class="form-group">
                             <label for="output-key">Upload Output Key</label>
-                            <input type="file" id="output-key">
+                            <input type="file" id="output-key" name="key">
                         </div>
 
                         <h3>Instructor Compilation Files <small>(batch upload)</small></h3>
                         <div class="form-group">
-                            <label for="compilation-files">Upload Compile File(s)</label>
-                            <input type="file" id="compilation-files" multiple>
+                            <label for="instructor-files">Upload Compile File(s)</label>
+                            <input type="file" id="instructor-files" name="instructor-files" multiple>
                         </div>
 
                         <div class="form-group">
                             <label for="required-files"><h3>Files Required for Compilation <small>(comma-separated)</small></h3></label>
                             <br>
-                            <textarea id="required-files" cols="40" rows="5"></textarea>
+                            <textarea id="required-files" name="required" cols="40" rows="5"></textarea>
                         </div>
 
                         <h3>File to be diffed with student's code</h3>
                         <div class="form-group">
                             <label for="diff-file">Upload Diff File</label>
-                            <input type="file" id="diff-file" style="margin-bottom:5px">
+                            <input type="file" id="diff-file" name="diff" style="margin-bottom:5px">
                         </div>
 
                         <h3>Code Review Parameters</h3>
                         <div class="checkbox">
-                            <label><input type="checkbox">Check for descriptive non-integer variable names</label>
+                            <label><input type="checkbox" name="var-check">Check for descriptive non-integer variable names</label>
                         </div>
                         <div class="checkbox">
-                            <label><input type="checkbox">Check for comments describing functions and variable declarations</label>
+                            <label><input type="checkbox" name="comment-check">Check for comments describing functions and variable declarations</label>
                         </div>
                         <div class="checkbox">
-                            <label><input type="checkbox">Check for indentation</label>
+                            <label><input type="checkbox" name="indent-check">Check for indentation</label>
                         </div>
 
                         <button type="submit" class="btn btn-primary">Save Template</button>

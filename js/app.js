@@ -36,6 +36,8 @@
     var TemplateLoaderView = Backbone.View.extend({
         el: '#content',
         templateLoaderTpl: templateLoaderTpl,
+        files: {},
+        instructor_files_count: 0,
         initialize: function() {
             // Load templates
             var that = this;
@@ -58,8 +60,15 @@
             // Write template with context to page
             $(this.el).html(templateLoaderTpl(context));
         },
+        progressHandlingFunction: function(e) {
+            if (e.lengthComputable) {
+                $('progress').attr({value: e.loaded, max: e.total});
+            }
+        },
         events: {
-            'click .templateSelect': 'selectTemplate'
+            'click .templateSelect': 'selectTemplate',
+            'change :file': 'uploadFile',
+            'submit #template-form': 'saveTemplate'
         },
         selectTemplate: function(e) {
             // Don't navigate to link
@@ -71,6 +80,49 @@
 
             // Select template
             $(e.target).closest('td').addClass('success');
+        },
+        uploadFile: function(e) {
+            // Keep track of files selected
+            if (e.target.id == 'instructor-files') {
+                // Exception: Loop through each file and give each its own key
+                // Doing it this way instead of an array of files because I
+                // don't know how to pass an array of files through Bottle.
+                for (var i=0; i<e.target.files.length; i++) {
+                    var keyname = e.target.id + parseInt(i, 10);
+                    console.log(keyname);
+                    this.files[keyname] = e.target.files[i];
+                }
+                this.instructor_files_count = e.target.files.length;
+            } else {
+                // Otherwise, just use the only file
+                this.files[e.target.id] = e.target.files[0];
+            }
+            console.log(this.files);
+        },
+        saveTemplate: function(e) {
+            e.preventDefault();
+
+            // Collect form input
+            var formData = new FormData();
+            for (var key in this.files) {
+                formData.append(key, this.files[key]);
+                console.log(formData.key);
+            }
+            formData.append('instructor-files-count', this.instructor_files_count);
+
+            // TODO: Append review parameters, required files, and template name to formData
+
+            $.ajax({
+                url: baseUrl + 'json/add-template/',
+                type: 'POST',
+                error: function() {
+                    console.log('Could not save template.');
+                },
+                data: formData,
+                cache: false,
+                contentType: false,
+                processData: false
+            });
         }
     });
 
