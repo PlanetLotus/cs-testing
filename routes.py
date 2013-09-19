@@ -80,7 +80,10 @@ def add_template():
         key_file = request.files.get('output-key') or None                  # Required
         script_file = request.files.get('input-script') or None
         diff_file = request.files.get('diff-file') or None
-        review_params = request.forms.get('review-params') or None
+
+        var_check = bool(request.forms.get('var-check')) or False
+        comment_check = bool(request.forms.get('comment-check')) or False
+        indent_check = bool(request.forms.get('indent-check')) or False
 
         # This is really sloppy because I don't know how to pass along an array
         # of files through Bottle. If this is possible, this could be a lot
@@ -94,6 +97,9 @@ def add_template():
                 break
     except:
         raise
+
+    # Package code review parameters into a list
+    review_params = [var_check, comment_check, indent_check]
 
     # Make sure required pieces are present
     if required_filenames == None or key_file == None or template_name == None:
@@ -116,6 +122,24 @@ def add_template():
         # Unfortunately, this catches more than just that error, so it's not
         # perfect.
         pass
+
+    # Construct and save the JSON template
+    new_template = {}
+    new_template['filename'] = template_name
+    new_template['required_filenames'] = required_filenames
+    new_template['key_file'] = key_file.filename
+
+    if script_file: new_template['script_file'] = script_file.filename
+    else: new_template['script_file'] = ''
+
+    if diff_file: new_template['diff_file'] = diff_file.filename
+    else: new_template['script_file'] = ''
+
+    new_template['instructor_files'] = instructor_files
+    new_template['review_params'] = review_params
+    template_file = open(save_path + '/' + template_name + '.json', 'w')
+    json.dump(new_template, template_file)
+    template_file.close()
 
     # Construct a list of files to save
     save_files = [key_file, script_file, diff_file]

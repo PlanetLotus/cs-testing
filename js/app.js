@@ -112,7 +112,9 @@
             formData.append('template-name', $('#template-name').val());
             formData.append('required-files', $('#required-files').val());
 
-            // TODO: Append review parameters to formData
+            formData.append('var-check', $('#var-check').is(':checked'));
+            formData.append('comment-check', $('#comment-check').is(':checked'));
+            formData.append('indent-check', $('#indent-check').is(':checked'));
 
             $.ajax({
                 url: baseUrl + 'add-template/',
