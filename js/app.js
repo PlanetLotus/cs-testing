@@ -109,11 +109,13 @@
                 console.log(formData.key);
             }
             formData.append('instructor-files-count', this.instructor_files_count);
+            formData.append('template-name', $('#template-name').val());
+            formData.append('required-files', $('#required-files').val());
 
-            // TODO: Append review parameters, required files, and template name to formData
+            // TODO: Append review parameters to formData
 
             $.ajax({
-                url: baseUrl + 'json/add-template/',
+                url: baseUrl + 'add-template/',
                 type: 'POST',
                 error: function() {
                     console.log('Could not save template.');
