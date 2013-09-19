@@ -54,7 +54,7 @@
                     <form id="template-form" role="form" enctype="multipart/form-data">
                         <h3>Template Name</h3>
                         <div class="form-group">
-                            <input type="text" id="template-name" name="template-name">
+                            <input type="text" id="template-name" name="template-name" required>
                         </div>
 
                         <h3>Expected Output</h3>
@@ -65,7 +65,7 @@
 
                         <div class="form-group">
                             <label for="output-key">Upload Output Key</label>
-                            <input type="file" id="output-key" name="key">
+                            <input type="file" id="output-key" name="key" required>
                         </div>
 
                         <h3>Instructor Compilation Files <small>(batch upload)</small></h3>
@@ -77,7 +77,7 @@
                         <div class="form-group">
                             <label for="required-files"><h3>Files Required for Compilation <small>(comma-separated)</small></h3></label>
                             <br>
-                            <textarea id="required-files" name="required" cols="40" rows="5"></textarea>
+                            <textarea id="required-files" name="required" cols="40" rows="5" required></textarea>
                         </div>
 
                         <h3>File to be diffed with student's code</h3>
@@ -88,13 +88,13 @@
 
                         <h3>Code Review Parameters</h3>
                         <div class="checkbox">
-                            <label><input type="checkbox" id="var-check"><s>Check for descriptive non-integer variable names</s></label>
+                            <label><input type="checkbox" id="var-check">Check for descriptive non-integer variable names</label>
                         </div>
                         <div class="checkbox">
-                            <label><input type="checkbox" id="comment-check"><s>Check for comments describing functions and variable declarations</s></label>
+                            <label><input type="checkbox" id="comment-check">Check for comments describing functions and variable declarations</label>
                         </div>
                         <div class="checkbox">
-                            <label><input type="checkbox" id="indent-check"><s>Check for indentation</s></label>
+                            <label><input type="checkbox" id="indent-check">Check for indentation</label>
                         </div>
 
                         <button type="submit" class="btn btn-primary">Save Template</button>
