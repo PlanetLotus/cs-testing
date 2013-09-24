@@ -187,8 +187,13 @@
             $('.source-code').each( function() {
                 if ($(this).hasClass('in') && this.id != target)
                     $(this).collapse('hide');
-                else if (!$(this).hasClass('in') && this.id == target)
-                    $(this).collapse('show');
+                else if (!$(this).hasClass('in') && this.id == target) {
+                    // This is super hacky...but necessary because .collapse
+                    // adds in height: auto which doesn't work here when we need
+                    // to specify a max-height for the div.
+                    $(this).removeAttr('style');
+                    $(this).addClass('in');
+                }
             });
         },
         feedbackNavClick: function(e) {
