@@ -179,12 +179,34 @@
             e.preventDefault();
             $('#source-nav li').removeClass('active');
             $(e.currentTarget).parent().addClass('active');
+
+            // Get name of target
+            var target = $(e.currentTarget).attr('name');
+
+            // Show/hide textareas
+            $('.source-code').each( function() {
+                if ($(this).hasClass('in') && this.id != target)
+                    $(this).collapse('hide');
+                else if (!$(this).hasClass('in') && this.id == target)
+                    $(this).collapse('show');
+            });
         },
         feedbackNavClick: function(e) {
             // Switch tabs, visually
             e.preventDefault();
             $('#feedback-nav li').removeClass('active');
             $(e.currentTarget).parent().addClass('active');
+
+            // Get name of target
+            var target = $(e.currentTarget).attr('name');
+
+            // Show/hide textareas
+            $('.feedback-text').each( function() {
+                if ($(this).hasClass('in') && this.id != target)
+                    $(this).collapse('hide');
+                else if (!$(this).hasClass('in') && this.id == target)
+                    $(this).collapse('show');
+            });
         }
     });
 

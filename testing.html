@@ -129,24 +129,59 @@
                     <button type="button" class="btn btn-primary pull-right">Toggle Diff</button>
 
                     <ul id="source-nav" class="nav nav-tabs">
-                        <li class="active"><a href="#">filename.adb</a></li>
-                        <li><a href="#">filename.ads</a></li>
-                        <li><a href="#">diff</a></li>
+                        <li class="active"><a href="#" name="filename.adb">filename.adb</a></li>
+                        <li><a href="#" name="filename.ads">filename.ads</a></li>
+                        <li><a href="#" name="diff">diff</a></li>
                     </ul>
+
+                    <div id="filename.adb" class="collapse in source-code">
+                        <p>Placeholder Text</p>
+                        <p>Placeholder Text</p>
+                        <p>Placeholder Text</p>
+                        <p>Placeholder Text</p>
+                        <p>Placeholder Text</p>
+                        <p>Placeholder Text</p>
+                        <p>Placeholder Text</p>
+                        <p>Placeholder Text</p>
+                        <p>Placeholder Text</p>
+                        <p>Placeholder Text</p>
+                        <p>Placeholder Text</p>
+                        <p>Placeholder Text</p>
+                        <p>Placeholder Text</p>
+                        <p>Placeholder Text</p>
+                        <p>Placeholder Text</p>
+                        <p>Placeholder Text</p>
+                    </div>
+                    <div id="filename.ads" class="collapse source-code">
+                        <p>Placeholder Text 2</p>
+                    </div>
+                    <div id="diff" class="collapse source-code">
+                        <p>Placeholder Text 3</p>
+                    </div>
 
                     <h2>Feedback</h2>
 
                     <ul id="feedback-nav" class="nav nav-tabs">
-                        <li class="active"><a href="#">Output</a></li>
-                        <li><a href="#">Compilation</a></li>
-                        <li><a href="#">Code Review</a></li>
+                        <li class="active"><a href="#" data-toggle="collapse" name="output">Output</a></li>
+                        <li><a href="#" name="compile">Compilation</a></li>
+                        <li><a href="#" name="review">Code Review</a></li>
                     </ul>
+
+                    <div id="output" class="collapse in feedback-text">
+                        <textarea class="form-control monospace" rows="8"></textarea>
+                    </div>
+                    <div id="compile" class="collapse feedback-text">
+                        <textarea class="form-control monospace" rows="8"></textarea>
+                    </div>
+                    <div id="review" class="collapse feedback-text">
+                        <textarea class="form-control monospace" rows="8"></textarea>
+                    </div>
 
                     <h2>Input</h2>
 
                     <div class="input-group">
                         <span class="input-group-addon">$</span>
-                        <input type="text" class="form-control" placeholder="Command Prompt">
+                        <input type="text" class="form-control monospace" placeholder="Command Prompt">
                     </div>
                 </div>
             </div>
