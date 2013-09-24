@@ -15,6 +15,9 @@
     var templateLoaderSrc = $('#template-loader-template').html();
     var templateLoaderTpl = Handlebars.compile(templateLoaderSrc);
 
+    var graderSrc = $('#grader-template').html();
+    var graderTpl = Handlebars.compile(graderSrc);
+
     /*
      * Models
      */
@@ -106,7 +109,6 @@
             var formData = new FormData();
             for (var key in this.files) {
                 formData.append(key, this.files[key]);
-                console.log(formData.key);
             }
             formData.append('instructor-files-count', this.instructor_files_count);
             formData.append('template-name', $('#template-name').val());
@@ -130,6 +132,17 @@
         }
     });
 
+    var GraderView = Backbone.View.extend({
+        el: '#content',
+        graderTpl: graderTpl,
+        initialize: function() {
+            this.render();
+        },
+        render: function() {
+            $(this.el).html(graderTpl());
+        }
+    });
+
     /*
      * Router
      */
@@ -144,13 +157,19 @@
             /* dynamic routes */
 
             /* static routes */
-            '': 'templateLoader'
+            '': 'templateLoader',
+            'grader': 'grader'
         },
 
         templateLoader: function() {
             console.log('templateLoader');
             this.handleNav();
             currentView = new TemplateLoaderView();
+        },
+        grader: function() {
+            console.log('grader');
+            this.handleNav();
+            currentView = new GraderView();
         }
     });
 

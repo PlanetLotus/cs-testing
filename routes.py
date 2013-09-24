@@ -154,3 +154,8 @@ def add_template():
             open_file = open(file_path, 'w')            # Will overwrite existing files of same name
             open_file.write(f.file.read(MAX_FILE_SIZE)) # Will stop reading at MAX_FILE_SIZE bytes
             open_file.close()
+
+#@route('')
+#def grader():
+#    """ Serves the grader page with a specific template in its context. """
+#    pass
