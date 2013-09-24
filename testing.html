@@ -110,10 +110,10 @@
                 <div class="col-md-3">
                     <h2>Student Listing</h2>
 
-                    <ul class="nav nav-pills nav-stacked">
+                    <ul id="student-nav" class="nav nav-pills nav-stacked">
                         <li>
                             <a href="#collapse1" data-toggle="collapse">CS141</a>
-                            <ul id="collapse1" class="nav nav-pills nav-stacked collapse">
+                            <ul id="collapse1" class="nav nav-pills nav-stacked student-nest-nav collapse">
                                 <li><a href="#">Test2</a></li>
                                 <li><a href="#">Test2</a></li>
                             </ul>
@@ -124,6 +124,30 @@
                 </div>
 
                 <div class="col-md-9">
+                    <h2>Source Code</h2>
+
+                    <button type="button" class="btn btn-primary pull-right">Toggle Diff</button>
+
+                    <ul id="source-nav" class="nav nav-tabs">
+                        <li class="active"><a href="#">filename.adb</a></li>
+                        <li><a href="#">filename.ads</a></li>
+                        <li><a href="#">diff</a></li>
+                    </ul>
+
+                    <h2>Feedback</h2>
+
+                    <ul id="feedback-nav" class="nav nav-tabs">
+                        <li class="active"><a href="#">Output</a></li>
+                        <li><a href="#">Compilation</a></li>
+                        <li><a href="#">Code Review</a></li>
+                    </ul>
+
+                    <h2>Input</h2>
+
+                    <div class="input-group">
+                        <span class="input-group-addon">$</span>
+                        <input type="text" class="form-control" placeholder="Command Prompt">
+                    </div>
                 </div>
             </div>
         </div>
@@ -136,6 +160,11 @@
     <script type="text/javascript" src="js/backbone.js"></script>
     <script type="text/javascript" src="js/handlebars.js"></script>
     <script type="text/javascript" src="js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="js/shCore.js"></script>
+    <script type="text/javascript" src="js/shBrushPlain.js"></script>
+
+    <link rel="stylesheet" href="css/shCore.css">
+    <link rel="stylesheet" href="css/shThemeDefault.css">
 
     <script>
         /* Ajax loading wheel */

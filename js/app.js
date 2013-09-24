@@ -140,6 +140,51 @@
         },
         render: function() {
             $(this.el).html(graderTpl());
+
+            /* Example of code highlighting
+            var code = '<pre class="brush: plain">' +
+                        '// Test of highlighter\n' +
+                        'function foo() {\n' +
+                        '   var test = 0;\n' +
+                        '};\n' +
+                        '</pre>';
+            $(this.el).append(code);
+            SyntaxHighlighter.highlight();
+            */
+        },
+        events: {
+            'click #student-nav a': 'studentNavClick',
+            'click .student-nest-nav a': 'studentNestNavClick',
+            'click #source-nav a': 'sourceNavClick',
+            'click #feedback-nav a': 'feedbackNavClick'
+        },
+        studentNavClick: function(e) {
+            // Switch tabs, visually
+            e.preventDefault();
+
+            // Don't trigger on nested children
+            if (!$(e.currentTarget).closest('ul').hasClass('student-nest-nav')) {
+                $('#student-nav li').removeClass('active');
+                $(e.currentTarget).parent().addClass('active');
+            }
+        },
+        studentNestNavClick: function(e) {
+            // Switch tabs, visually
+            e.preventDefault();
+            $('.student-nest-nav li').removeClass('active');
+            $(e.currentTarget).parent().addClass('active');
+        },
+        sourceNavClick: function(e) {
+            // Switch tabs, visually
+            e.preventDefault();
+            $('#source-nav li').removeClass('active');
+            $(e.currentTarget).parent().addClass('active');
+        },
+        feedbackNavClick: function(e) {
+            // Switch tabs, visually
+            e.preventDefault();
+            $('#feedback-nav li').removeClass('active');
+            $(e.currentTarget).parent().addClass('active');
         }
     });
 
