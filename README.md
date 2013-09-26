@@ -7,7 +7,7 @@ Run Instructions
 ------------------
 
 <ol>
-<li>Run $ python routes.py</li>
+<li>Run <code>$ python server.py</code></li>
 <li>Open up a web browser and visit localhost:8080</li>
 </ol>
 
