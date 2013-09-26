@@ -34,6 +34,11 @@ def css(filename):
     """ Serves all CSS files """
     return static_file(filename, root=CSS)
 
+@route('/testing/fonts/<filename>')
+def fonts(filename):
+    """ Serves all fonts """
+    return static_file(filename, root=IMG)
+
 @route('/testing/img/<filename>')
 def img(filename):
     """ Serves all image files """
