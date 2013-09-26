@@ -18,13 +18,13 @@ Frontend:
 
 <ul>
 <li>HTML5</li>
-<li>CSS using [Bootstrap 3](http://getbootstrap.com/)</li>
-<li>JavaScript using [Backbone](http://backbonejs.org/)</li>
+<li>CSS using <a target="_blank" href="http://getbootstrap.com/">Bootstrap 3</a></li>
+<li>JavaScript using <a target="_blank" href="http://backbonejs.org/">Backbone</a></li>
 </ul>
 
 Backend:
 
 <ul>
-<li>Python using [Bottle](http://bottlepy.org/docs/dev/)</li>
+<li>Python using <a target="_blank" href="http://bottlepy.org/docs/dev/">Bottle</a></li>
 <li>JSON files for data storage and retrieval</li>
 </ul>
