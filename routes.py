@@ -10,11 +10,11 @@ from bottle import abort, request, route, static_file
 MAX_FILE_SIZE = 8192
 
 # Static file paths
-CLASSES = os.path.join(os.path.dirname(__file__), 'data/classes')
+CLASSES = os.path.join(os.path.dirname(__file__), 'data/classes/')
 CSS = os.path.join(os.path.dirname(__file__), 'css')
 IMG = os.path.join(os.path.dirname(__file__), 'img')
 JS = os.path.join(os.path.dirname(__file__), 'js')
-TEMPLATES = os.path.join(os.path.dirname(__file__), 'data/templates')
+TEMPLATES = os.path.join(os.path.dirname(__file__), 'data/templates/')
 
 #
 # Static file routes
@@ -160,7 +160,25 @@ def add_template():
             open_file.write(f.file.read(MAX_FILE_SIZE)) # Will stop reading at MAX_FILE_SIZE bytes
             open_file.close()
 
-#@route('')
-#def grader():
-#    """ Serves the grader page with a specific template in its context. """
-#    pass
+@route('/testing/json/students/')
+def students():
+    """ Returns list of classes and student names. """
+
+    # There's probably a fancier way of doing this same thing with one call of
+    # os.walk instead, but this is probably more readable
+
+    # Build list of classes
+    classes = {}
+    for dirname in os.listdir(CLASSES):
+        if os.path.isdir(os.path.join(CLASSES, dirname)):
+            classes[dirname] = []
+
+    # From list of classes, build list of students
+    # Could put this inside the loop above, but this looks cleaner
+    for c in classes:
+        for dirname in os.listdir(CLASSES + c):
+            if os.path.isdir(os.path.join(CLASSES, c, dirname)):
+                classes[c].append(dirname)
+
+    # 'classes' is a class-to-students mapping
+    return to_json(classes)

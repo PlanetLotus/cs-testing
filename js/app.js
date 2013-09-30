@@ -181,7 +181,20 @@
             this.template = template;
             console.log(this.template);
 
-            this.render();
+            // Fetch list of classes
+            var that = this;
+            $.ajax({
+                url: baseUrl + 'json/students/',
+                success: function(classes) {
+                    that.classes = classes;
+                    console.log(classes);
+
+                    that.render();
+                },
+                error: function() {
+                    console.log('Could not fetch list of classes.');
+                }
+            });
         },
         render: function() {
             $(this.el).html(graderTpl());
