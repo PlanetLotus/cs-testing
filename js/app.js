@@ -41,6 +41,7 @@
         templateLoaderTpl: templateLoaderTpl,
         files: {},
         instructor_files_count: 0,
+        template: {},
         initialize: function() {
             // Load templates
             var that = this;
@@ -71,7 +72,8 @@
         events: {
             'click .templateSelect': 'selectTemplate',
             'change :file': 'uploadFile',
-            'submit #template-form': 'saveTemplate'
+            'submit #template-form': 'saveTemplate',
+            'click #load-template': 'loadTemplate'
         },
         selectTemplate: function(e) {
             // Don't navigate to link
@@ -118,9 +120,14 @@
             formData.append('comment-check', $('#comment-check').is(':checked'));
             formData.append('indent-check', $('#indent-check').is(':checked'));
 
+            var that = this;
             $.ajax({
                 url: baseUrl + 'add-template/',
                 type: 'POST',
+                success: function() {
+                    // Reload templates
+                    that.initialize();
+                },
                 error: function() {
                     console.log('Could not save template.');
                 },
@@ -129,14 +136,65 @@
                 contentType: false,
                 processData: false
             });
+        },
+        loadTemplate: function(e) {
+            e.preventDefault();
+
+            // Get selected template name
+            var selected_template = {};
+            var selected_template_name = $('#template-table .success').text();
+            if (!selected_template_name) return;
+
+            // Find selected template based off its name
+            for (var i=0; i<this.templateList.models.length; i++) {
+                if (this.templateList.models[i].attributes.filename == selected_template_name) {
+                    this.template = this.templateList.models[i].attributes;
+                    break;
+                }
+            }
+
+            // Make sure the template was found
+            if (jQuery.isEmptyObject(this.template)) {
+                alert('Template not found.');
+                return;
+            }
+            console.log(this.template);
+
+            // Go to grader page
+            window.location.href = baseUrl + '#grader';
         }
     });
 
     var GraderView = Backbone.View.extend({
         el: '#content',
         graderTpl: graderTpl,
-        initialize: function() {
-            this.render();
+        initialize: function(template) {
+            // This can happen normally if the user presses the Back button
+            // then goes Forward again
+            // This can be prevented by using window.location.replace but
+            // that comes with other user restrictions.
+            if (jQuery.isEmptyObject(template)) {
+                alert('No template found.');
+                window.location.href = baseUrl;
+            }
+
+            this.template = template;
+            console.log(this.template);
+
+            // Fetch list of classes
+            var that = this;
+            $.ajax({
+                url: baseUrl + 'json/students/',
+                success: function(classes) {
+                    that.classes = classes;
+                    console.log(classes);
+
+                    that.render();
+                },
+                error: function() {
+                    console.log('Could not fetch list of classes.');
+                }
+            });
         },
         render: function() {
             $(this.el).html(graderTpl());
@@ -162,11 +220,12 @@
             // Switch tabs, visually
             e.preventDefault();
 
+            /*
             // Don't trigger on nested children
             if (!$(e.currentTarget).closest('ul').hasClass('student-nest-nav')) {
                 $('#student-nav li').removeClass('active');
                 $(e.currentTarget).parent().addClass('active');
-            }
+            }*/
         },
         studentNestNavClick: function(e) {
             // Switch tabs, visually
@@ -241,7 +300,10 @@
         grader: function() {
             console.log('grader');
             this.handleNav();
-            currentView = new GraderView();
+
+            // This is kind of tricky...currentView.template is referencing the old view
+            // then we're re-assigning the currentView to the GraderView instance
+            currentView = new GraderView(currentView.template);
         }
     });
 

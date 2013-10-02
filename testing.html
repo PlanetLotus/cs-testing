@@ -35,7 +35,7 @@
                 <div class="col-md-3">
                     <h2>Load Template</h2>
 
-                    <table class="table table-bordered table-hover">
+                    <table class="table table-bordered table-hover" id="template-table">
                         <!-- For each template, create a row and cell... -->
                         {{#each templates}}
                         <tr>
@@ -44,8 +44,9 @@
                         {{/each}}
                     </table>
 
-                    <button type="button" class="btn btn-default"><s>Edit Template</s></button>
-                    <button type="button" class="btn btn-primary">Load Template</button>
+                    <button type="button" class="btn btn-default btn-block"><s>Edit Template</s></button>
+                    <button type="button" class="btn btn-danger btn-block"><s>Delete Template</s></button>
+                    <button type="button" class="btn btn-primary btn-block" id="load-template">Load Template</button>
                 </div>
 
                 <div class="col-md-9">
@@ -112,7 +113,7 @@
 
                     <ul id="student-nav" class="nav nav-pills nav-stacked">
                         <li>
-                            <a href="#collapse1" data-toggle="collapse">CS141</a>
+                            <a href="#collapse1" data-toggle="collapse"><strong>CS141</strong></a>
                             <ul id="collapse1" class="nav nav-pills nav-stacked student-nest-nav collapse">
                                 <li><a href="#">Test2</a></li>
                                 <li><a href="#">Test2</a></li>
@@ -165,6 +166,7 @@
                         <li class="active"><a href="#" data-toggle="collapse" name="output">Output</a></li>
                         <li><a href="#" name="compile">Compilation</a></li>
                         <li><a href="#" name="review">Code Review</a></li>
+                        <li><a href="#" name="key">Key</a></li>
                     </ul>
 
                     <div id="output" class="collapse in feedback-text">
@@ -174,6 +176,9 @@
                         <textarea class="form-control monospace" rows="8"></textarea>
                     </div>
                     <div id="review" class="collapse feedback-text">
+                        <textarea class="form-control monospace" rows="8"></textarea>
+                    </div>
+                    <div id="key" class="collapse feedback-text">
                         <textarea class="form-control monospace" rows="8"></textarea>
                     </div>
 
