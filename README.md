@@ -13,7 +13,7 @@ A local client-server program used for scripted testing of students' code.
 
 <ol>
 <li>Run <code>$ python server.py</code></li>
-<li>Open up a web browser and visit localhost:8080</li>
+<li>Open up a web browser and visit localhost:8080/testing/</li>
 </ol>
 
 <h2>Tools in Use</h2>
