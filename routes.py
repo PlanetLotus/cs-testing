@@ -12,6 +12,7 @@ MAX_FILE_SIZE = 8192
 # Static file paths
 CLASSES = os.path.join(os.path.dirname(__file__), 'data/classes/')
 CSS = os.path.join(os.path.dirname(__file__), 'css')
+FONTS = os.path.join(os.path.dirname(__file__), 'fonts')
 IMG = os.path.join(os.path.dirname(__file__), 'img')
 JS = os.path.join(os.path.dirname(__file__), 'js')
 TEMPLATES = os.path.join(os.path.dirname(__file__), 'data/templates/')
@@ -37,7 +38,7 @@ def css(filename):
 @route('/testing/fonts/<filename>')
 def fonts(filename):
     """ Serves all fonts """
-    return static_file(filename, root=IMG)
+    return static_file(filename, root=FONTS)
 
 @route('/testing/img/<filename>')
 def img(filename):

@@ -168,23 +168,34 @@
     var GraderView = Backbone.View.extend({
         el: '#content',
         graderTpl: graderTpl,
-        initialize: function(template) {
-            // This can happen normally if the user presses the Back button
-            // then goes Forward again
-            // This can be prevented by using window.location.replace but
-            // that comes with other user restrictions.
-            if (jQuery.isEmptyObject(template)) {
-                alert('No template found.');
-                window.location.href = baseUrl;
-            }
+        initialize: function(template, templates) {
 
             this.template = template;
+            this.templates = templates;
             console.log(this.template);
+            console.log(this.templates);
+
+            var that = this;
+
+            // If we didn't come from the template loader page, fetch templates
+            if (this.templates.length === 0) {
+                this.templateList = new TemplateCollection();
+                this.templateList.fetch({
+                    async: false,
+                    success: function() {
+                        that.templates = that.templateList.models;
+                    },
+                    error: function() {
+                        console.log('Failed to load templates.');
+                        return;
+                    }
+                });
+            }
 
             // Fetch list of classes
-            var that = this;
             $.ajax({
                 url: baseUrl + 'json/students/',
+                async: false,
                 success: function(classes) {
                     that.classes = classes;
                     console.log(classes);
@@ -197,8 +208,6 @@
             });
         },
         render: function() {
-            $(this.el).html(graderTpl());
-
             /* Example of code highlighting
             var code = '<pre class="brush: plain">' +
                         '// Test of highlighter\n' +
@@ -209,10 +218,22 @@
             $(this.el).append(code);
             SyntaxHighlighter.highlight();
             */
+
+            // Add template, classes, and student context
+            // TODO: Finish writing this context and feed it into the template
+            var context = {
+                templates: this.templates
+            };
+            console.log(context);
+
+            // Write template with context to page
+            $(this.el).html(graderTpl(context));
+
         },
         events: {
             'click #student-nav a': 'studentNavClick',
             'click .student-nest-nav a': 'studentNestNavClick',
+            'click #template-nav a': 'selectTemplate',
             'click #source-nav a': 'sourceNavClick',
             'click #feedback-nav a': 'feedbackNavClick'
         },
@@ -232,6 +253,14 @@
             e.preventDefault();
             $('.student-nest-nav li').removeClass('active');
             $(e.currentTarget).parent().addClass('active');
+        },
+        selectTemplate: function(e) {
+            // Visual update
+            e.preventDefault();
+            $('#template-nav li').removeClass('active');
+            $(e.currentTarget).parent().addClass('active');
+
+            // TODO: Update template variable
         },
         sourceNavClick: function(e) {
             // Switch tabs, visually
@@ -303,7 +332,11 @@
 
             // This is kind of tricky...currentView.template is referencing the old view
             // then we're re-assigning the currentView to the GraderView instance
-            currentView = new GraderView(currentView.template);
+            if (currentView) {
+                currentView = new GraderView(currentView.template, currentView.templateList.models);
+            } else {
+                currentView = new GraderView({}, []);
+            }
         }
     });
 
