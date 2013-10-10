@@ -1,7 +1,7 @@
 """
 Bottle routes
 """
-import json
+import simplejson as json
 import os
 
 from util import *
@@ -98,9 +98,9 @@ def add_template():
         raise Exception(required_filenames, key_file, template_name)
 
     # Make sure template name doesn't already exist
-    templates = get_templates()
+    templates = json.loads(get_templates())
     for t in templates:
-        if t.filename == template_name:
+        if t['filename'] == template_name:
             raise Exception(template_name)
 
     # Rename files (except instructor files) for consistency
@@ -110,7 +110,7 @@ def add_template():
     if diff_file: diff_file.filename = 'diff'
 
     # If necessary, create template directory
-    save_path = TEMPLATES + '/' + template_name
+    save_path = TEMPLATES + template_name
     print save_path
     try:
         if not os.path.exists(save_path):

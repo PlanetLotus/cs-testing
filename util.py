@@ -1,7 +1,10 @@
 import datetime
 import simplejson as json
+import os
 
 from bottle import response
+
+TEMPLATES = os.path.join(os.path.dirname(__file__), 'data/templates/')
 
 # Convert datetimes to ISO format before casting to JSON
 DATETIME_HANDLER = lambda x: x.strftime('%A, %d. %B %Y %I:%M%p') \
