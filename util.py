@@ -11,3 +11,19 @@ def to_json(results):
     """Change content type and cast results to JSON"""
     response.content_type = 'application/json'
     return json.dumps(results, default=DATETIME_HANDLER)
+
+def get_templates():
+    """Returns a list of all templates."""
+    templates = []
+    for root, dirs, files in os.walk(TEMPLATES):
+        for f in files:
+            if f.endswith('.json'):
+                # Open file
+                data_file = open(os.path.join(root, f))
+
+                # Append JSON to templates
+                templates.append(json.load(data_file))
+
+                # Close file
+                data_file.close()
+    return to_json(templates)

@@ -61,21 +61,7 @@ def css(filename):
 @route('/testing/json/templates/')
 def templates():
     """ Returns all JSON templates. """
-
-    templates = []
-    for root, dirs, files in os.walk(TEMPLATES):
-        for f in files:
-            if f.endswith('.json'):
-                # Open file
-                data_file = open(os.path.join(root, f))
-
-                # Append JSON to templates
-                templates.append(json.load(data_file))
-
-                # Close file
-                data_file.close()
-
-    return to_json(templates)
+    return get_templates()
 
 @route('/testing/add-template/', method="POST")
 def add_template():
@@ -110,6 +96,12 @@ def add_template():
     # Make sure required pieces are present
     if required_filenames == None or key_file == None or template_name == None:
         raise Exception(required_filenames, key_file, template_name)
+
+    # Make sure template name doesn't already exist
+    templates = get_templates()
+    for t in templates:
+        if t.filename == template_name:
+            raise Exception(template_name)
 
     # Rename files (except instructor files) for consistency
     # This way any previous files will be overwritten if the template is being edited

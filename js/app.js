@@ -107,13 +107,24 @@
         saveTemplate: function(e) {
             e.preventDefault();
 
+            // Make sure template name doesn't already exist
+            // Must verify server-side as well!
+            var templates = this.templateList.models;
+            var filename = $('#template-name').val().trim();
+            for (var i=0; i<templates.length; i++) {
+                if (templates[i].attributes.filename == filename) {
+                    alert('Template name already exists!');
+                    return;
+                }
+            }
+
             // Collect form input
             var formData = new FormData();
             for (var key in this.files) {
                 formData.append(key, this.files[key]);
             }
             formData.append('instructor-files-count', this.instructor_files_count);
-            formData.append('template-name', $('#template-name').val());
+            formData.append('template-name', filename);
             formData.append('required-files', $('#required-files').val());
 
             formData.append('var-check', $('#var-check').is(':checked'));
