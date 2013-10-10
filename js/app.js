@@ -240,6 +240,15 @@
             // Write template with context to page
             $(this.el).html(graderTpl(context));
 
+            // If template exists, select it
+            var that = this;
+            if (!jQuery.isEmptyObject(this.template)) {
+                $('#template-nav a').each(function() {
+                    if ( $(this).text() == that.template.filename ) {
+                        $(this).parent().addClass('active');
+                    }
+                });
+            }
         },
         events: {
             'click #student-nav a': 'studentNavClick',

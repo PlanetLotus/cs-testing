@@ -130,8 +130,11 @@
                         <h4 style="text-align:center"><small>In case you changed your mind</small></h4>
 
                         <ul id="template-nav" class="nav nav-pills nav-stacked">
-                            <li><a href="#">Test2</a></li>
-                            <li><a href="#">Test2</a></li>
+                            {{#each templates}}
+                            <li>
+                                <a class="templateSelect" href="#">{{attributes.filename}}</a>
+                            </li>
+                            {{/each}}
                         </ul>
                     </div>
                 </div>
