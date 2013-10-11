@@ -209,8 +209,6 @@
                 async: false,
                 success: function(classes) {
                     that.classes = classes;
-                    console.log(classes);
-
                     that.render();
                 },
                 error: function() {
@@ -280,7 +278,12 @@
             $('#template-nav li').removeClass('active');
             $(e.currentTarget).parent().addClass('active');
 
-            // TODO: Update template variable
+            // Update template variable
+            var template_name = $(e.currentTarget).text();
+            for (var i=0; i<this.templates.length; i++) {
+                if (this.templates[i].attributes.filename === template_name)
+                    this.template = this.templates[i];
+            }
         },
         sourceNavClick: function(e) {
             // Switch tabs, visually
