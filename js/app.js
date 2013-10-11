@@ -231,8 +231,8 @@
             */
 
             // Add template, classes, and student context
-            // TODO: Finish writing this context and feed it into the template
             var context = {
+                classes: this.classes,
                 templates: this.templates
             };
             console.log(context);

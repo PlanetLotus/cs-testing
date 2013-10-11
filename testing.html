@@ -113,13 +113,27 @@
                         <h2>Student Listing</h2>
 
                         <ul id="student-nav" class="nav nav-pills nav-stacked">
+                            <!-- Could not get handlebars to iterate over classes object. Using static list at the moment. -->
+                            {{#if classes.CS141}}
                             <li>
-                                <a href="#collapse1" data-toggle="collapse"><strong>CS141</strong></a>
-                                <ul id="collapse1" class="nav nav-pills nav-stacked student-nest-nav collapse">
-                                    <li><a href="#">Test2</a></li>
-                                    <li><a href="#">Test2</a></li>
+                                <a href="#collapse141" data-toggle="collapse"><strong>CS141</strong></a>
+                                <ul id="collapse141" class="nav nav-pills nav-stacked student-nest-nav collapse">
+                                {{#each classes.CS141}}
+                                <li><a href="#">{{this}}</a></li>
+                                {{/each}}
                                 </ul>
                             </li>
+                            {{/if}}
+                            {{#if classes.CS145}}
+                            <li>
+                                <a href="#collapse145" data-toggle="collapse"><strong>CS145</strong></a>
+                                <ul id="collapse145" class="nav nav-pills nav-stacked student-nest-nav collapse">
+                                {{#each classes.CS145}}
+                                <li><a href="#">{{this}}</a></li>
+                                {{/each}}
+                                </ul>
+                            </li>
+                            {{/if}}
                         </ul>
 
                         <button type="button" class="btn btn-primary">Run Student's Program</button>
