@@ -277,8 +277,13 @@
             // Select student
             // For now, wipe out student selection until the form supports multiple selects
             // TODO: Update for multiple student selection
+            var selectedClass = $(e.currentTarget).closest('ul')[0].id;
+            if (!selectedClass) {
+                alert('Could not find class associated with student.');
+                return;
+            }
             this.selectedStudents = [];
-            this.selectedStudents.push($(e.currentTarget).text());
+            this.selectedStudents.push(selectedClass + '/' + $(e.currentTarget).text());
         },
         selectTemplate: function(e) {
             // Visual update
