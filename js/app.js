@@ -179,6 +179,7 @@
     var GraderView = Backbone.View.extend({
         el: '#content',
         graderTpl: graderTpl,
+        selectedStudents: [],
         initialize: function(template, templates) {
 
             this.template = template;
@@ -253,7 +254,8 @@
             'click .student-nest-nav a': 'studentNestNavClick',
             'click #template-nav a': 'selectTemplate',
             'click #source-nav a': 'sourceNavClick',
-            'click #feedback-nav a': 'feedbackNavClick'
+            'click #feedback-nav a': 'feedbackNavClick',
+            'click #run-program': 'runProgram'
         },
         studentNavClick: function(e) {
             // Switch tabs, visually
@@ -271,6 +273,12 @@
             e.preventDefault();
             $('.student-nest-nav li').removeClass('active');
             $(e.currentTarget).parent().addClass('active');
+
+            // Select student
+            // For now, wipe out student selection until the form supports multiple selects
+            // TODO: Update for multiple student selection
+            this.selectedStudents = [];
+            this.selectedStudents.push($(e.currentTarget).text());
         },
         selectTemplate: function(e) {
             // Visual update
@@ -322,6 +330,34 @@
                     $(this).collapse('hide');
                 else if (!$(this).hasClass('in') && this.id == target)
                     $(this).collapse('show');
+            });
+        },
+        runProgram: function(e) {
+            e.preventDefault();
+
+            // Pass student name(s) and template name to server
+            // Trying to build this with multiple student selection being a possibility
+            // even though it's not possible on the form right now
+            data = {
+                students: this.selectedStudents,
+                template: this.template
+            };
+            data = JSON.stringify(data);
+
+            $.ajax({
+                url: baseUrl + 'run-program/',
+                async: false,
+                type: 'POST',
+                contentType: 'application/json',
+                dataType: 'json',
+                data: data,
+                success: function(results) {
+                    // Post-run data here
+                    console.log('Successful program run!');
+                },
+                error: function() {
+                    console.log('Could not run program.');
+                }
             });
         }
     });

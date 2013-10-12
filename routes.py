@@ -175,3 +175,14 @@ def students():
 
     # 'classes' is a class-to-students mapping
     return to_json(classes)
+
+@route('/testing/run-program/', method="POST")
+def run_program():
+    """ Runs a student's program and returns the results. """
+    try:
+        template = request.json['template']
+        student_names = request.json['students']
+    except:
+        raise
+
+    return None
