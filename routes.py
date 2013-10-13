@@ -67,9 +67,9 @@ def templates():
 def add_template():
     """ Convert template into JSON and write to file. """
     try:
-        template_name = request.forms.get('template-name') or None          # Required
-        required_filenames = request.forms.get('required-files') or None    # Required
-        key_file = request.files.get('output-key') or None                  # Required
+        template_name = request.forms.get('template-name') or None                  # Required
+        required_filenames = request.forms.get('required-files').split(',') or None # Required
+        key_file = request.files.get('output-key') or None                          # Required
         script_file = request.files.get('input-script') or None
         diff_file = request.files.get('diff-file') or None
 

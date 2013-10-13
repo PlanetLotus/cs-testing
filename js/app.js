@@ -125,7 +125,10 @@
             }
             formData.append('instructor-files-count', this.instructor_files_count);
             formData.append('template-name', filename);
-            formData.append('required-files', $('#required-files').val());
+
+            var required_files = $('#required-files').val().split(',');
+            for (var i=0; i<required_files.length; i++) required_files[i] = required_files[i].trim();
+            formData.append('required-files', required_files);
 
             formData.append('var-check', $('#var-check').is(':checked'));
             formData.append('comment-check', $('#comment-check').is(':checked'));
