@@ -188,4 +188,23 @@ def run_program():
     except:
         raise
 
-    return None
+    # Keep local reference to template attributes
+    # Shorter, and easier to update if the attribute names get modified
+    print template
+    required = template['required_filenames']
+    review = template['review_params']
+    instructor_filenames = template['instructor_files']
+    diff_filename = template['diff_file']
+    key_filename = template['key_file']
+    script_filename = template['script_file']
+    required_filenames = template['required_filenames']
+
+    results = []    # One entry per student
+    # Loop through each student, compiling their results
+    for name in student_names:
+        # Check for required files
+        student_files = os.listdir(CLASSES + name)
+        if not all(x in student_files for x in required_filenames):
+            raise Exception(required_filenames)
+
+    return results
