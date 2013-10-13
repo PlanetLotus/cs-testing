@@ -82,9 +82,12 @@ def add_template():
         # cleaner.
         instructor_files_count = int(request.forms.get('instructor-files-count'))
         instructor_files = []
+        instructor_files_names = []
         for x in range(instructor_files_count):
             try:
-                instructor_files.append(request.files.get('instructor-files' + str(x)))
+                this_file = request.files.get('instructor-files' + str(x))
+                instructor_files.append(this_file)
+                instructor_files_names.append(this_file.filename)
             except:
                 break
     except:
@@ -131,9 +134,9 @@ def add_template():
     else: new_template['script_file'] = ''
 
     if diff_file: new_template['diff_file'] = diff_file.filename
-    else: new_template['script_file'] = ''
+    else: new_template['diff_file'] = ''
 
-    new_template['instructor_files'] = instructor_files
+    new_template['instructor_files'] = instructor_files_names
     new_template['review_params'] = review_params
     template_file = open(save_path + '/' + template_name + '.json', 'w')
     json.dump(new_template, template_file)
