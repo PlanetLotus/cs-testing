@@ -73,7 +73,8 @@
             'click .templateSelect': 'selectTemplate',
             'change :file': 'uploadFile',
             'submit #template-form': 'saveTemplate',
-            'click #load-template': 'loadTemplate'
+            'click #load-template': 'loadTemplate',
+	    'click #edit-template': 'editTemplate'
         },
         selectTemplate: function(e) {
             // Don't navigate to link
@@ -176,7 +177,36 @@
 
             // Go to grader page
             window.location.href = baseUrl + '#grader';
-        }
+        },
+
+	editTemplate: function(e) {
+	    e.preventDefault(); 
+
+	    
+            // Get selected template name
+            var selected_template = {};
+            var selected_template_name = $('#template-table .success').text();
+            if (!selected_template_name) return;
+
+            // Find selected template based off its name
+            for (var i=0; i<this.templateList.models.length; i++) {
+                if (this.templateList.models[i].attributes.filename == selected_template_name) {
+                    this.template = this.templateList.models[i].attributes;
+                    break;
+                }
+            }
+
+            // Make sure the template was found
+            if (jQuery.isEmptyObject(this.template)) {
+                alert('Template not found.');
+                return;
+            }
+	    $('#template-name').val() = selected_template_name; 
+            console.log(this.template);
+            window.location.href = baseUrl + '#grader';
+
+
+	}
     });
 
     var GraderView = Backbone.View.extend({
