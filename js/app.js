@@ -206,15 +206,9 @@
 
             $('#required-files').val(this.template.required_filenames);
 
-            if(this.template.review_params[0]) {
-                $('#var-check').prop('checked', true);
-            }
-            if(this.template.review_params[1]) {
-                $('#comment-check').prop('checked', true);
-            }
-            if(this.template.review_params[2]) {
-                $('#indent-check').prop('checked', true);
-            }
+            $('#var-check').prop('checked', this.template.review_params.var_check);
+            $('#comment-check').prop('checked', this.template.review_params.comment_check);
+            $('#indent-check').prop('checked', this.template.review_params.indent_check);
 
             //TODO Get file for the Output Key
             /* This is tricky...it's not possible to have javascript autoselect
@@ -227,8 +221,6 @@
              */
 
             console.log(this.template);
-
-
         }
     });
 
