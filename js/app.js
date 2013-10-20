@@ -201,9 +201,8 @@
                 alert('Template not found.');
                 return;
             }
-	    $('#template-name').val() = selected_template_name; 
+	    $('#template-name').val(selected_template_name);  
             console.log(this.template);
-            window.location.href = baseUrl + '#grader';
 
 
 	}
