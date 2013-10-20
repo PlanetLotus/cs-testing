@@ -1,5 +1,6 @@
 (function ($) {
 
+    var set = false; 
     /* Define a base url */
     var baseUrl = window.location.origin + window.location.pathname;
 
@@ -112,13 +113,21 @@
             // Must verify server-side as well!
             var templates = this.templateList.models;
             var filename = $('#template-name').val().trim();
-            for (var i=0; i<templates.length; i++) {
-                if (templates[i].attributes.filename == filename) {
-                    alert('Template name already exists!');
-                    return;
+
+            if(set == false) {
+                
+
+                for (var i=0; i<templates.length; i++) {
+                    if (templates[i].attributes.filename == filename) {
+                        alert('Template name already exists!');
+                        return;
+                    }
                 }
             }
-
+            else{
+                set = false; 
+            }
+         
             // Collect form input
             var formData = new FormData();
             for (var key in this.files) {
@@ -181,7 +190,8 @@
 
         editTemplate: function(e) {
             e.preventDefault(); 
-
+            
+            set = true; 
         
             // Get selected template name
             var selected_template = {};
@@ -216,8 +226,9 @@
             if(this.templateList.models[i].attributes.review_params[2]) {
                 $('#indent-check').prop('checked', true);
             } 
-
-
+            
+            //TODO Get file for the Output Key
+            //TODO Delete the old template after the save
             console.log(this.template);
 
 
