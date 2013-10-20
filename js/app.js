@@ -74,7 +74,7 @@
             'change :file': 'uploadFile',
             'submit #template-form': 'saveTemplate',
             'click #load-template': 'loadTemplate',
-	    'click #edit-template': 'editTemplate'
+            'click #edit-template': 'editTemplate'
         },
         selectTemplate: function(e) {
             // Don't navigate to link
@@ -179,10 +179,10 @@
             window.location.href = baseUrl + '#grader';
         },
 
-	editTemplate: function(e) {
-	    e.preventDefault(); 
+        editTemplate: function(e) {
+            e.preventDefault(); 
 
-	    
+        
             // Get selected template name
             var selected_template = {};
             var selected_template_name = $('#template-table .success').text();
@@ -202,15 +202,26 @@
                 return;
             }
 
-	    // Puts the selected template name into the name text box
-	    $('#template-name').val(selected_template_name);  
+            // Puts the selected template name into the name text box
+            $('#template-name').val(selected_template_name);  
 
-	 //   $('#required-files').val(this.template.formData.$('required-files'));
+            $('#required-files').val(this.templateList.models[i].attributes.required_filenames);
+
+            if(this.templateList.models[i].attributes.review_params[0]) {
+                $('#var-check').prop('checked', true); 
+            } 
+            if(this.templateList.models[i].attributes.review_params[1]) {
+                $('#comment-check').prop('checked', true);
+            } 
+            if(this.templateList.models[i].attributes.review_params[2]) {
+                $('#indent-check').prop('checked', true);
+            } 
+
 
             console.log(this.template);
 
 
-	}
+        }
     });
 
     var GraderView = Backbone.View.extend({
