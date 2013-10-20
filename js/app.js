@@ -204,16 +204,15 @@
             // Puts the selected template name into the name text box
             $('#template-name').val(selected_template_name);
 
-            $('#required-files').val(this.templateList.models[i].attributes.required_filenames);
-            console.log(i);
+            $('#required-files').val(this.template.required_filenames);
 
-            if(this.templateList.models[i].attributes.review_params[0]) {
+            if(this.template.review_params[0]) {
                 $('#var-check').prop('checked', true);
             }
-            if(this.templateList.models[i].attributes.review_params[1]) {
+            if(this.template.review_params[1]) {
                 $('#comment-check').prop('checked', true);
             }
-            if(this.templateList.models[i].attributes.review_params[2]) {
+            if(this.template.review_params[2]) {
                 $('#indent-check').prop('checked', true);
             }
 
