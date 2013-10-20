@@ -74,9 +74,9 @@ def add_template():
         script_file = request.files.get('input-script') or None
         diff_file = request.files.get('diff-file') or None
 
-        var_check = bool(request.forms.get('var-check')) or False
-        comment_check = bool(request.forms.get('comment-check')) or False
-        indent_check = bool(request.forms.get('indent-check')) or False
+        var_check = request.forms.get('var-check') or ''
+        comment_check = request.forms.get('comment-check') or ''
+        indent_check = request.forms.get('indent-check') or ''
 
         # This is really sloppy because I don't know how to pass along an array
         # of files through Bottle. If this is possible, this could be a lot
@@ -95,13 +95,18 @@ def add_template():
         raise
 
     # Package code review parameters into a list
-    review_params = [var_check, comment_check, indent_check]
+    review_params = {}
+    review_params['var_check'] = (var_check == 'true')
+    review_params['comment_check'] = (comment_check == 'true')
+    review_params['indent_check'] = (indent_check == 'true')
 
     # Make sure required pieces are present
     if required_filenames == None or key_file == None or template_name == None:
         raise Exception(required_filenames, key_file, template_name)
 
     # Make sure template name doesn't already exist
+    # This might be necessary later when deciding if we're updating a template
+    # rather than creating a new one
     #templates = json.loads(get_templates())
     #for t in templates:
     #    if t['filename'] == template_name:
