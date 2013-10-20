@@ -12,6 +12,7 @@ MAX_FILE_SIZE = 8192
 # Static file paths
 CLASSES = os.path.join(os.path.dirname(__file__), 'data/classes/')
 CSS = os.path.join(os.path.dirname(__file__), 'css')
+CLASSES = os.path.join(os.path.dirname(__file__), 'data/exec/')
 FONTS = os.path.join(os.path.dirname(__file__), 'fonts')
 IMG = os.path.join(os.path.dirname(__file__), 'img')
 JS = os.path.join(os.path.dirname(__file__), 'js')
@@ -101,10 +102,10 @@ def add_template():
         raise Exception(required_filenames, key_file, template_name)
 
     # Make sure template name doesn't already exist
-    templates = json.loads(get_templates())
-    for t in templates:
-        if t['filename'] == template_name:
-            raise Exception(template_name)
+    #templates = json.loads(get_templates())
+    #for t in templates:
+    #    if t['filename'] == template_name:
+    #        raise Exception(template_name)
 
     # Rename files (except instructor files) for consistency
     # This way any previous files will be overwritten if the template is being edited
@@ -206,5 +207,10 @@ def run_program():
         student_files = os.listdir(CLASSES + name)
         if not all(x in student_files for x in required_filenames):
             raise Exception(required_filenames)
+
+        # Copy student files to exec directory
+
+        # Copy instructor files to exec dir
+        # Overwrites student files of same name
 
     return results

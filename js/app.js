@@ -1,6 +1,5 @@
 (function ($) {
 
-    var set = false; 
     /* Define a base url */
     var baseUrl = window.location.origin + window.location.pathname;
 
@@ -109,25 +108,17 @@
         saveTemplate: function(e) {
             e.preventDefault();
 
-            // Make sure template name doesn't already exist
-            // Must verify server-side as well!
             var templates = this.templateList.models;
             var filename = $('#template-name').val().trim();
 
-            if(set == false) {
-                
-
-                for (var i=0; i<templates.length; i++) {
-                    if (templates[i].attributes.filename == filename) {
-                        alert('Template name already exists!');
-                        return;
-                    }
+            // If template name exists already, prompt user
+            for (var i=0; i<templates.length; i++) {
+                if (templates[i].attributes.filename == filename) {
+                    var ok = confirm('Overwrite template?');
+                    if (!ok) return;
                 }
             }
-            else{
-                set = false; 
-            }
-         
+
             // Collect form input
             var formData = new FormData();
             for (var key in this.files) {
@@ -189,10 +180,8 @@
         },
 
         editTemplate: function(e) {
-            e.preventDefault(); 
-            
-            set = true; 
-        
+            e.preventDefault();
+
             // Get selected template name
             var selected_template = {};
             var selected_template_name = $('#template-table .success').text();
@@ -213,22 +202,31 @@
             }
 
             // Puts the selected template name into the name text box
-            $('#template-name').val(selected_template_name);  
+            $('#template-name').val(selected_template_name);
 
             $('#required-files').val(this.templateList.models[i].attributes.required_filenames);
+            console.log(i);
 
             if(this.templateList.models[i].attributes.review_params[0]) {
-                $('#var-check').prop('checked', true); 
-            } 
+                $('#var-check').prop('checked', true);
+            }
             if(this.templateList.models[i].attributes.review_params[1]) {
                 $('#comment-check').prop('checked', true);
-            } 
+            }
             if(this.templateList.models[i].attributes.review_params[2]) {
                 $('#indent-check').prop('checked', true);
-            } 
-            
+            }
+
             //TODO Get file for the Output Key
-            //TODO Delete the old template after the save
+            /* This is tricky...it's not possible to have javascript autoselect
+             * a file for the user. All we can do is list the filename currently selected
+             * and then prompt the user for whether they want to change it.
+             * Then, we'd need to make sure the route would check to see if the user
+             * wanted to overwrite the file. Could do this by checking if the template already
+             * exists AND those file upload values are blank, then use the original value.
+             * Open to suggestions.
+             */
+
             console.log(this.template);
 
 
