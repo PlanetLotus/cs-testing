@@ -201,7 +201,12 @@
                 alert('Template not found.');
                 return;
             }
+
+	    // Puts the selected template name into the name text box
 	    $('#template-name').val(selected_template_name);  
+
+	 //   $('#required-files').val(this.template.formData.$('required-files'));
+
             console.log(this.template);
 
 
