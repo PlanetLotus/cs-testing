@@ -12,7 +12,7 @@ MAX_FILE_SIZE = 8192
 # Static file paths
 CLASSES = os.path.join(os.path.dirname(__file__), 'data/classes/')
 CSS = os.path.join(os.path.dirname(__file__), 'css')
-CLASSES = os.path.join(os.path.dirname(__file__), 'data/exec/')
+EXEC = os.path.join(os.path.dirname(__file__), 'data/exec/')
 FONTS = os.path.join(os.path.dirname(__file__), 'fonts')
 IMG = os.path.join(os.path.dirname(__file__), 'img')
 JS = os.path.join(os.path.dirname(__file__), 'js')
@@ -27,7 +27,7 @@ def automated_testing():
     return static_file('testing.html', '')
 
 @route('/testing/data/classes/<filename>')
-def css(filename):
+def classes(filename):
     """ Serves all classes files """
     return static_file(filename, root=CLASSES)
 
@@ -52,7 +52,7 @@ def js(filename):
     return static_file(filename, root=JS)
 
 @route('/testing/data/templates/<filename>')
-def css(filename):
+def tpls(filename):
     """ Serves all template files """
     return static_file(filename, root=TEMPLATES)
 
