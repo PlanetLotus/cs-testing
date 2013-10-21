@@ -3,6 +3,7 @@ Bottle routes
 """
 import simplejson as json
 import os
+import shutil
 
 from util import *
 from bottle import abort, request, route, static_file
@@ -213,7 +214,19 @@ def run_program():
         if not all(x in student_files for x in required_filenames):
             raise Exception(required_filenames)
 
+        # Make sure exec directory exists
+        try:
+            if not os.path.exists(EXEC):
+                os.makedirs(EXEC)
+        except OSError:
+            pass
+
         # Copy student files to exec directory
+        student_files = os.listdir(CLASSES + name)
+        for f in student_files:
+            full_filename = os.path.join(CLASSES, name, f)
+            if (os.path.isfile(full_filename)):
+                shutil.copy2(full_filename, EXEC)
 
         # Copy instructor files to exec dir
         # Overwrites student files of same name
