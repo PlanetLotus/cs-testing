@@ -1,1 +1,1 @@
-{"filename": "calculator", "review_params": {"indent_check": false, "comment_check": true, "var_check": true}, "instructor_files": ["calculator1-instructor.adb"], "diff_file": "", "key_file": "output-key", "script_file": "input-script", "required_filenames": ["calculator1.adb"]}
+{"filename": "calculator", "review_params": {"indent_check": false, "comment_check": true, "var_check": true}, "instructor_files": ["calculator1.adb"], "diff_file": "", "key_file": "output-key", "script_file": "input-script", "required_filenames": ["calculator1.adb"]}
