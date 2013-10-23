@@ -239,6 +239,23 @@ def run_program():
             if (os.path.isfile(full_filename)):
                 shutil.copy2(full_filename, EXEC)
 
+        # Determine what compiler to use
+        # Programmatically determining language is not foolproof;
+        # it will take the first matching language and run it. Therefore,
+        # if multiple languages are present, it'll simply try the first one.
+        # For this program's purposes, this should work just fine, but it's something
+        # to be aware of.
+        for f in required:
+            if f.endswith('.py'):
+                # Run Python code
+                break
+            elif f.endswith('.c'):
+                # Compile C program
+                break
+            elif f.endswith('.cpp') or f.endswith('.cxx'):
+                # Compile C++ program
+                break
+
         # Cleanup...
         # Empty exec directory
     return results
