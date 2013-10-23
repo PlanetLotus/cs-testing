@@ -195,9 +195,13 @@ def run_program():
     except:
         raise
 
+    # Make sure template and student_names contain something
+    if not template or not student_names:
+        raise Exception(template, student_names)
+
     # Keep local reference to template attributes
     # Shorter, and easier to update if the attribute names get modified
-    print template
+    template_name = template['filename']
     required = template['required_filenames']
     review = template['review_params']
     instructor_filenames = template['instructor_files']
@@ -230,5 +234,11 @@ def run_program():
 
         # Copy instructor files to exec dir
         # Overwrites student files of same name
+        for f in instructor_filenames:
+            full_filename = os.path.join(TEMPLATES + template_name + '/' + f)
+            if (os.path.isfile(full_filename)):
+                shutil.copy2(full_filename, EXEC)
 
+        # Cleanup...
+        # Empty exec directory
     return results
