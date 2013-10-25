@@ -1,6 +1,7 @@
 import datetime
 import simplejson as json
 import os
+import subprocess
 
 from bottle import response
 
@@ -30,3 +31,18 @@ def get_templates():
                 # Close file
                 data_file.close()
     return to_json(templates)
+
+def exec_py(filepath):
+    # Set up command to be run
+    cmd = ['python', filepath]
+
+    # Write to output file...need to store this somewhere other than exec
+    # so that it's guaranteed to not overwrite a file
+    with open('output.txt', 'w') as out:
+        return_code = subprocess.call(cmd, stdout=out)
+
+def exec_c():
+    pass
+
+def exec_cpp():
+    pass
