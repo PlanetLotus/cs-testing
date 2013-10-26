@@ -249,11 +249,13 @@ def run_program():
         # For this program's purposes, this should work just fine, but it's something
         # to be aware of.
         full_path = CLASSES + name + '/'
+        output = ''
+        errors = ''
         for f in required:
             # FIRST FILENAME IN REQUIRED FILES IS TREATED AS MAIN
             if f.endswith('.py'):
                 # Run Python code
-                exec_py(full_path + required[0])
+                output, errors = exec_py(full_path + required[0])
                 break
             elif f.endswith('.c'):
                 # Compile C program
@@ -262,6 +264,15 @@ def run_program():
                 # Compile C++ program
                 break
 
-        # Cleanup...
-        # Empty exec directory
-    return results
+        # Append to results
+        student = {
+                'name': name,
+                'output': output,
+                'errors': errors
+        }
+        results.append(student)
+
+    # Cleanup...
+    # Empty exec and output directories
+
+    return to_json(results)

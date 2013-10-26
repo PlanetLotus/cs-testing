@@ -5,6 +5,8 @@ import subprocess
 
 from bottle import response
 
+MAX_FILE_SIZE = 8192
+
 TEMPLATES = os.path.join(os.path.dirname(__file__), 'data/templates/')
 OUTPUT = os.path.join(os.path.dirname(__file__), 'data/output/')
 
@@ -34,12 +36,23 @@ def get_templates():
     return to_json(templates)
 
 def exec_py(filepath):
+    """ Runs a Python program located at `filepath`. """
+
     # Set up command to be run
     cmd = ['python', filepath]
 
     # Write to output file. Assumes OUTPUT exists.
-    with open(OUTPUT + 'output.txt', 'w') as out:
-        return_code = subprocess.call(cmd, stdout=out)
+    with open(OUTPUT + 'output.txt', 'w') as out, open(OUTPUT + 'error.txt', 'w') as err:
+        return_code = subprocess.call(cmd, stdout=out, stderr=err)
+
+    # Return output and error text
+    output = ''
+    errors = ''
+    with open(OUTPUT + 'output.txt', 'r') as out, open(OUTPUT + 'error.txt', 'r') as err:
+        output = out.read(MAX_FILE_SIZE)
+        errors = err.read(MAX_FILE_SIZE)
+
+    return output, errors
 
 def exec_c():
     pass

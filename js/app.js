@@ -407,6 +407,7 @@
                 success: function(results) {
                     // Post-run data here
                     console.log('Successful program run!');
+                    console.log(results);
                 },
                 error: function() {
                     console.log('Could not run program.');
