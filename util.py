@@ -6,6 +6,7 @@ import subprocess
 from bottle import response
 
 TEMPLATES = os.path.join(os.path.dirname(__file__), 'data/templates/')
+OUTPUT = os.path.join(os.path.dirname(__file__), 'data/output/')
 
 # Convert datetimes to ISO format before casting to JSON
 DATETIME_HANDLER = lambda x: x.strftime('%A, %d. %B %Y %I:%M%p') \
@@ -36,9 +37,8 @@ def exec_py(filepath):
     # Set up command to be run
     cmd = ['python', filepath]
 
-    # Write to output file...need to store this somewhere other than exec
-    # so that it's guaranteed to not overwrite a file
-    with open('output.txt', 'w') as out:
+    # Write to output file. Assumes OUTPUT exists.
+    with open(OUTPUT + 'output.txt', 'w') as out:
         return_code = subprocess.call(cmd, stdout=out)
 
 def exec_c():

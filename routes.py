@@ -218,10 +218,13 @@ def run_program():
         if not all(x in student_files for x in required_filenames):
             raise Exception(required_filenames)
 
-        # Make sure exec directory exists
+        # Make sure exec and output directory exist
         try:
             if not os.path.exists(EXEC):
                 os.makedirs(EXEC)
+
+            if not os.path.exists(OUTPUT):
+                os.makedirs(OUTPUT)
         except OSError:
             pass
 
@@ -240,14 +243,17 @@ def run_program():
                 shutil.copy2(full_filename, EXEC)
 
         # Determine what compiler to use
-        # Programmatically determining language is not foolproof;
+        # WARNING: Programmatically determining language is not foolproof;
         # it will take the first matching language and run it. Therefore,
         # if multiple languages are present, it'll simply try the first one.
         # For this program's purposes, this should work just fine, but it's something
         # to be aware of.
+        full_path = CLASSES + name + '/'
         for f in required:
+            # FIRST FILENAME IN REQUIRED FILES IS TREATED AS MAIN
             if f.endswith('.py'):
                 # Run Python code
+                exec_py(full_path + required[0])
                 break
             elif f.endswith('.c'):
                 # Compile C program
