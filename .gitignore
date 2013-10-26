@@ -1,3 +1,9 @@
 *.pyc
 *.swp
 *.swo
+
+# Ignore files inside exec and output directories. These are temporary files.
+# The directories themselves do not need to be present to run the program. They
+# will be checked for and created automatically.
+data/exec/
+data/output/
