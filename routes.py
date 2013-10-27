@@ -1,14 +1,11 @@
 """
 Bottle routes
 """
-import simplejson as json
-import os
 import shutil
 
 from util import *
+from util import MAX_FILE_SIZE
 from bottle import abort, request, route, static_file
-
-MAX_FILE_SIZE = 8192
 
 # Static file paths
 CLASSES = os.path.join(os.path.dirname(__file__), 'data/classes/')
@@ -204,11 +201,18 @@ def run_program():
     template_name = template['filename']
     required = template['required_filenames']
     review = template['review_params']
-    instructor_filenames = template['instructor_files']
-    diff_filename = template['diff_file']
-    key_filename = template['key_file']
-    script_filename = template['script_file']
     required_filenames = template['required_filenames']
+    instructor_filenames = template['instructor_files']
+
+    # Get full path of the following attributes
+    template_path = os.path.join(TEMPLATES + template_name + '/')
+    key_filepath = template_path + template['key_file']
+
+    if template['diff_file']: diff_filepath = template_path + template['diff_file']
+    else: diff_filepath = None
+
+    if template['script_file']: script_filepath = template_path + template['script_file']
+    else: script_filepath = None
 
     results = []    # One entry per student
     # Loop through each student, compiling their results
