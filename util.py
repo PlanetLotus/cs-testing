@@ -2,13 +2,21 @@ import datetime
 import simplejson as json
 import os
 import subprocess
+import shutil
 
 from bottle import response
 
+# Static file paths
+CLASSES = os.path.join(os.path.dirname(__file__), 'data/classes/')
+CSS = os.path.join(os.path.dirname(__file__), 'css')
+EXEC = os.path.join(os.path.dirname(__file__), 'data/exec/')
+FONTS = os.path.join(os.path.dirname(__file__), 'fonts')
+IMG = os.path.join(os.path.dirname(__file__), 'img')
+JS = os.path.join(os.path.dirname(__file__), 'js')
+TEMPLATES = os.path.join(os.path.dirname(__file__), 'data/templates/')
+
 MAX_FILE_SIZE = 8192
 
-TEMPLATES = os.path.join(os.path.dirname(__file__), 'data/templates/')
-OUTPUT = os.path.join(os.path.dirname(__file__), 'data/output/')
 EXEC = os.path.join(os.path.dirname(__file__), 'data/exec/')
 
 # Convert datetimes to ISO format before casting to JSON
@@ -35,6 +43,31 @@ def get_templates():
                 # Close file
                 data_file.close()
     return to_json(templates)
+
+def prepare_exec(student_name, template_name, instructor_filenames):
+    """ A helper that makes sure the exec dir is present and then copies
+    student and instructor files to the dir. """
+
+    # Make sure exec directory exists
+    try:
+        if not os.path.exists(EXEC):
+            os.makedirs(EXEC)
+    except OSError:
+        pass
+
+    # Copy student files to exec directory
+    student_files = os.listdir(CLASSES + student_name)
+    for f in student_files:
+        full_filename = os.path.join(CLASSES, student_name, f)
+        if (os.path.isfile(full_filename)):
+            shutil.copy2(full_filename, EXEC)
+
+    # Copy instructor files to exec dir
+    # Overwrites student files of same name
+    for f in instructor_filenames:
+        full_filename = os.path.join(TEMPLATES + template_name + '/' + f)
+        if (os.path.isfile(full_filename)):
+            shutil.copy2(full_filename, EXEC)
 
 def exec_py(filepath, input_script_path=None):
     """ Runs a Python program located at `filepath`.  Uses `input_script_path`

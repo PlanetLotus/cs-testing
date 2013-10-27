@@ -1,8 +1,6 @@
 """
 Bottle routes
 """
-import shutil
-
 from util import *
 from util import MAX_FILE_SIZE
 from bottle import abort, request, route, static_file
@@ -222,26 +220,8 @@ def run_program():
         if not all(x in student_files for x in required_filenames):
             raise Exception(required_filenames)
 
-        # Make sure exec directory exists
-        try:
-            if not os.path.exists(EXEC):
-                os.makedirs(EXEC)
-        except OSError:
-            pass
-
-        # Copy student files to exec directory
-        student_files = os.listdir(CLASSES + name)
-        for f in student_files:
-            full_filename = os.path.join(CLASSES, name, f)
-            if (os.path.isfile(full_filename)):
-                shutil.copy2(full_filename, EXEC)
-
-        # Copy instructor files to exec dir
-        # Overwrites student files of same name
-        for f in instructor_filenames:
-            full_filename = os.path.join(TEMPLATES + template_name + '/' + f)
-            if (os.path.isfile(full_filename)):
-                shutil.copy2(full_filename, EXEC)
+        # Copy student and instructor files to exec directory
+        prepare_exec(name, template_name, instructor_filenames)
 
         # Determine what compiler to use
         # WARNING: Programmatically determining language is not foolproof;
