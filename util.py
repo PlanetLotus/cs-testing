@@ -9,6 +9,7 @@ MAX_FILE_SIZE = 8192
 
 TEMPLATES = os.path.join(os.path.dirname(__file__), 'data/templates/')
 OUTPUT = os.path.join(os.path.dirname(__file__), 'data/output/')
+EXEC = os.path.join(os.path.dirname(__file__), 'data/exec/')
 
 # Convert datetimes to ISO format before casting to JSON
 DATETIME_HANDLER = lambda x: x.strftime('%A, %d. %B %Y %I:%M%p') \
@@ -35,24 +36,32 @@ def get_templates():
                 data_file.close()
     return to_json(templates)
 
-def exec_py(filepath):
-    """ Runs a Python program located at `filepath`. """
+def exec_py(filepath, input_script_path=None):
+    """ Runs a Python program located at `filepath`.  Uses `input_script_path`
+    as stdin if present. Assumes `input_script_path` is the full path. """
 
     # Set up command to be run
     cmd = ['python', filepath]
 
-    # Write to output file. Assumes OUTPUT exists.
-    with open(OUTPUT + 'output.txt', 'w') as out, open(OUTPUT + 'error.txt', 'w') as err:
-        return_code = subprocess.call(cmd, stdout=out, stderr=err)
+    # If script exists, open file
+    script = None
+    if input_script_path:
+        script = open(input_script_path, 'r')
+
+    # Run program and save output
+    output = ''
+    error = ''
+    try:
+        output = subprocess.check_output(cmd, stdin=script, stderr=subprocess.STDOUT)
+    except subprocess.CalledProcessError, e:
+        # Program returned an error. Save the error.
+        error = e.output
+
+    # Close file
+    if script: script.close()
 
     # Return output and error text
-    output = ''
-    errors = ''
-    with open(OUTPUT + 'output.txt', 'r') as out, open(OUTPUT + 'error.txt', 'r') as err:
-        output = out.read(MAX_FILE_SIZE)
-        errors = err.read(MAX_FILE_SIZE)
-
-    return output, errors
+    return output, error
 
 def exec_c():
     pass

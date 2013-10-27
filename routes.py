@@ -222,13 +222,10 @@ def run_program():
         if not all(x in student_files for x in required_filenames):
             raise Exception(required_filenames)
 
-        # Make sure exec and output directory exist
+        # Make sure exec directory exists
         try:
             if not os.path.exists(EXEC):
                 os.makedirs(EXEC)
-
-            if not os.path.exists(OUTPUT):
-                os.makedirs(OUTPUT)
         except OSError:
             pass
 
@@ -259,7 +256,7 @@ def run_program():
             # FIRST FILENAME IN REQUIRED FILES IS TREATED AS MAIN
             if f.endswith('.py'):
                 # Run Python code
-                output, errors = exec_py(full_path + required[0])
+                output, errors = exec_py(full_path + required[0], script_filepath)
                 break
             elif f.endswith('.c'):
                 # Compile C program
@@ -277,6 +274,6 @@ def run_program():
         results.append(student)
 
     # Cleanup...
-    # Empty exec and output directories
+    # Empty exec directory
 
     return to_json(results)
