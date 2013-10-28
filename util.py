@@ -98,15 +98,26 @@ def get_files(template, student_name):
     instructor_filenames = template['instructor_files']
     for f in instructor_filenames:
         full_filename = os.path.join(TEMPLATES + template_name + '/' + f)
-        print full_filename
         if os.path.isfile(full_filename) and not f.startswith('.'):
             with open(full_filename, 'r') as open_file:
                 contents = open_file.read(MAX_FILE_SIZE)
                 instructor_file_contents[f] = contents
 
     # Diff file
+    if template['diff_file']:
+        full_filename = os.path.join(TEMPLATES + template_name + '/' + template['diff_file'])
+        if os.path.isfile(full_filename) and not f.startswith('.'):
+            with open(full_filename, 'r') as open_file:
+                contents = open_file.read(MAX_FILE_SIZE)
+                diff_contents = contents
 
     # Key file
+    if template['key_file']:
+        full_filename = os.path.join(TEMPLATES + template_name + '/' + template['key_file'])
+        if os.path.isfile(full_filename) and not f.startswith('.'):
+            with open(full_filename, 'r') as open_file:
+                contents = open_file.read(MAX_FILE_SIZE)
+                key_contents = contents
 
     return student_file_contents, instructor_file_contents, diff_contents, key_contents
 

@@ -256,9 +256,9 @@ def run_program():
                 'errors': errors,
                 'files': student_file_contents,
                 'instructor_files': instructor_file_contents,
-                'diff_file': '',
-                'review': '',
-                'key': ''
+                'diff_file': diff_contents,
+                'key': key_contents,
+                'review': ''
         }
         results.append(student)
 
