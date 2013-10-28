@@ -244,11 +244,21 @@ def run_program():
                 # Compile C++ program
                 break
 
+        # Process review params and pass back results
+
+        # Get file contents
+        student_file_contents, instructor_file_contents, diff_contents, key_contents = get_files(template, name)
+
         # Append to results
         student = {
                 'name': name,
                 'output': output,
-                'errors': errors
+                'errors': errors,
+                'files': student_file_contents,
+                'instructor_files': {},
+                'diff_file': '',
+                'review': '',
+                'key': ''
         }
         results.append(student)
 

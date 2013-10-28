@@ -69,6 +69,37 @@ def prepare_exec(student_name, template_name, instructor_filenames):
         if (os.path.isfile(full_filename)):
             shutil.copy2(full_filename, EXEC)
 
+def get_files(template, student_name):
+    """ Returns the contents of student's code, instructor's code, diff file,
+    and key file. """
+
+    student_file_contents = {}      # Filename : contents
+    instructor_file_contents = {}   # Filename : contents
+    diff_contents = ''
+    key_contents = ''
+
+    ## Might cause issues if object files are in the directory
+    ## e.g. .pyc, .o
+    ## TODO: Find a way to not include non-ASCII or non-Unicode files, NOT
+    ## based on file extension
+
+    # Student files
+    student_files = os.listdir(CLASSES + student_name)
+    for f in student_files:
+        full_filename = os.path.join(CLASSES, student_name, f)
+        if (os.path.isfile(full_filename)):
+            with open(full_filename, 'r') as open_file:
+                contents = open_file.read(MAX_FILE_SIZE)
+                student_file_contents[f] = contents
+
+    # Instructor files
+
+    # Diff file
+
+    # Key file
+
+    return student_file_contents, instructor_file_contents, diff_contents, key_contents
+
 def exec_py(filepath, input_script_path=None):
     """ Runs a Python program located at `filepath`.  Uses `input_script_path`
     as stdin if present. Assumes `input_script_path` is the full path. """
