@@ -255,7 +255,7 @@ def run_program():
                 'output': output,
                 'errors': errors,
                 'files': student_file_contents,
-                'instructor_files': {},
+                'instructor_files': instructor_file_contents,
                 'diff_file': '',
                 'review': '',
                 'key': ''
