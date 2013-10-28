@@ -1,1 +1,1 @@
-{"filename": "python test", "review_params": {"indent_check": false, "comment_check": false, "var_check": false}, "instructor_files": ["instructor.py", "instructor2.py"], "diff_file": "", "key_file": "output-key", "script_file": "input-script", "required_filenames": ["main.py"]}
+{"filename": "python test", "review_params": {"indent_check": false, "comment_check": false, "var_check": false}, "instructor_files": ["instructor.py", "instructor2.py"], "diff_file": "diff", "key_file": "output-key", "script_file": "input-script", "required_filenames": ["main.py"]}
