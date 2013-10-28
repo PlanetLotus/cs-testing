@@ -87,7 +87,7 @@ def get_files(template, student_name):
     student_files = os.listdir(CLASSES + student_name)
     for f in student_files:
         full_filename = os.path.join(CLASSES, student_name, f)
-        if (os.path.isfile(full_filename)):
+        if os.path.isfile(full_filename) and not f.startswith('.'):
             with open(full_filename, 'r') as open_file:
                 contents = open_file.read(MAX_FILE_SIZE)
                 student_file_contents[f] = contents
