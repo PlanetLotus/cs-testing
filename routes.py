@@ -229,14 +229,13 @@ def run_program():
         # if multiple languages are present, it'll simply try the first one.
         # For this program's purposes, this should work just fine, but it's something
         # to be aware of.
-        full_path = CLASSES + name + '/'
         output = ''
         errors = ''
         for f in required:
             # FIRST FILENAME IN REQUIRED FILES IS TREATED AS MAIN
             if f.endswith('.py'):
                 # Run Python code
-                output, errors = exec_py(full_path + required[0], script_filepath)
+                output, errors = exec_py(EXEC + required[0], script_filepath)
                 break
             elif f.endswith('.c'):
                 # Compile C program
