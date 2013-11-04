@@ -210,6 +210,32 @@
             $('#comment-check').prop('checked', this.template.review_params.comment_check);
             $('#indent-check').prop('checked', this.template.review_params.indent_check);
 
+
+
+            //TODO Could make it so it only puts one warnning up rather than just exiting 
+            //out of all of them as the user keeps hitting edit.
+            
+            // Puts warning signs when you edit a file that is blank.
+            if(this.template.script_file === "")
+            {
+                $('#input-script').before('<b class="alert alert-warning alert-dismissable"> Warning! <button type="button" class="close" data-dismiss="alert" >&times;</button> </b>'); 
+            }
+
+            if(this.template.key_file === "")
+            {
+                $('#output-key').before('<b class="alert alert-warning alert-dismissable"> Warning! <button type="button" class="close" data-dismiss="alert" >&times;</button> </b>'); 
+            }
+            if(this.template.instructor_files === "")
+            {
+                $('#instructor-files').before('<b class="alert alert-warning alert-dismissable"> Warning! <button type="button" class="close" data-dismiss="alert" >&times;</button> </b>'); 
+            }
+            if(this.template.diff_file === "")
+            {
+                $('#diff-file').before('<b class="alert alert-warning alert-dismissable"> Warning! <button type="button" class="close" data-dismiss="alert" >&times;</button> </b>'); 
+            }
+
+
+
             //TODO Get file for the Output Key
             /* This is tricky...it's not possible to have javascript autoselect
              * a file for the user. All we can do is list the filename currently selected
