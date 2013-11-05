@@ -7,21 +7,21 @@
 <h3>Create Template Page</h3>
 
 <ul>
-    <li><s>Autopopulate list of templates</s></li>
-    <li><s>Edit template</s></li>
+    <li><del>Autopopulate list of templates</del></li>
+    <li><del>Edit template</del></li>
     <li>Delete template</li>
-    <li><s>Load template</s></li>
-    <li><s>Save template</s></li>
+    <li><del>Load template</del></li>
+    <li><del>Save template</del></li>
     <li>Template overwrite warnings</li>
-    <li><s>Client-side validation</s></li>
+    <li><del>Client-side validation</del></li>
 </ul>
 
 <h3>Run Program Page</h3>
 
 <ul>
-    <li><s>Autopopulate list of students</s></li>
-    <li><s>Autopopulate list of templates</s></li>
-    <li><s>Run program with one student selected</s></li>
+    <li><del>Autopopulate list of students</del></li>
+    <li><del>Autopopulate list of templates</del></li>
+    <li><del>Run program with one student selected</del></li>
     <li>Run program with multiple students selected</li>
     <li>Populate textareas with dynamic response from server</li>
     <li>Diff any two (or more??) files</li>
@@ -33,17 +33,17 @@
 <h3>Create Template Page</h3>
 
 <ul>
-    <li><s>Return list of templates</s></li>
+    <li><del>Return list of templates</del></li>
     <li>Delete template</li>
-    <li>Update/<s>Save</s> template</li>
+    <li>Update/<del>Save</del> template</li>
 </ul>
 
 <h3>Run Program Page</h3>
 
 <ul>
-    <li><s>Return list of templates</s></li>
-    <li><s>Return list of students</s></li>
-    <li><s>Run Python program</s></li>
+    <li><del>Return list of templates</del></li>
+    <li><del>Return list of students</del></li>
+    <li><del>Run Python program</del></li>
 </ul>
 
 <h2>Extras<h2>
@@ -52,11 +52,11 @@
 
 <h3>Subprocess Timeout</h3>
 
-<p>This would be very important if multiple students were being run, but this 
-feature is not supported yet. Because of this, if a student program runs indefinitely, 
-the program should simply be killed. This is less catastrophic for just one program 
-being run at once but would be difficult to track down with more than one. 
-This is still a highly desirable feature that should be implemented soon after 
+<p>This would be very important if multiple students were being run, but this
+feature is not supported yet. Because of this, if a student program runs indefinitely,
+the program should simply be killed. This is less catastrophic for just one program
+being run at once but would be difficult to track down with more than one.
+This is still a highly desirable feature that should be implemented soon after
 the other "core functionality" is taken care of.</p>
 
 <h3>More Languages</h3>
