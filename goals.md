@@ -50,6 +50,15 @@
 
 <p>These are low priority features that are outside our goals for this quarter.</p>
 
+<h3>Subprocess Timeout</h3>
+
+<p>This would be very important if multiple students were being run, but this 
+feature is not supported yet. Because of this, if a student program runs indefinitely, 
+the program should simply be killed. This is less catastrophic for just one program 
+being run at once but would be difficult to track down with more than one. 
+This is still a highly desirable feature that should be implemented soon after 
+the other "core functionality" is taken care of.</p>
+
 <h3>More Languages</h3>
 
 <p>C, C++, and Java are also on the list, but so far we think that making one
