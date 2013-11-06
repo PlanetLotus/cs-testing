@@ -44,6 +44,64 @@ def get_templates():
                 data_file.close()
     return to_json(templates)
 
+def update_template(old, new):
+    """Update attributes of a template that already exists."""
+
+    # Update template attributes
+    new_template = {}
+    new_template['review_params'] = {}
+    new_template['filename'] = old['filename']
+
+    if not new['required_filenames']:
+        return False    # Error
+
+    new_template['required_filenames'] = new['required_filenames']
+    new_template['review_params'] = new['review_params']
+    new_template['key_file'] = 'output-key'
+
+    if new['script_file']: new_template['script_file'] = 'input-script'
+    else: new_template['script_file'] = old['script_file']
+
+    if new['diff_file']: new_template['diff_file'] = 'diff'
+    else: new_template['diff_file'] = old['diff_file']
+
+    if new['instructor_files_names']: new_template['instructor_files'] = new['instructor_files_names']
+    else: new_template['instructor_files'] = old['instructor_files']
+
+    save_path = TEMPLATES + new_template['filename']
+    template_file = open(save_path + '/' + new_template['filename'] + '.json', 'w')
+    json.dump(new_template, template_file)
+    template_file.close()
+
+    # Add/overwrite new files
+    save_files = []
+
+    if new['key_file']:
+        new['key_file'].filename = 'output-key'
+        save_files.append(new['key_file'])
+
+    if new['script_file']:
+        new['script_file'].filename = 'input-script'
+        save_files.append(new['script_file'])
+
+    if new['diff_file']:
+        new['diff_file'].filename = 'diff'
+        save_files.append(new['diff_file'])
+
+    if new['instructor_files']:
+        # TODO: Delete old instructor files!
+        for f in new['instructor_files']:
+            save_files.append(f)
+
+    # Save each file
+    for f in save_files:
+        if f != None:
+            file_path = "{}/{}".format(save_path, f.filename)
+            print file_path
+            open_file = open(file_path, 'w')            # Will overwrite existing files of same name
+            open_file.write(f.file.read(MAX_FILE_SIZE)) # Will stop reading at MAX_FILE_SIZE bytes
+            open_file.close()
+
 def prepare_exec(student_name, template_name, instructor_filenames):
     """ A helper that makes sure the exec dir is present and then copies
     student and instructor files to the dir. """
