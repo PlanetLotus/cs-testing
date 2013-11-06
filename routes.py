@@ -96,17 +96,27 @@ def add_template():
     review_params['comment_check'] = (comment_check == 'true')
     review_params['indent_check'] = (indent_check == 'true')
 
-    # Make sure required pieces are present
-    if required_filenames == None or key_file == None or template_name == None:
-        raise Exception(required_filenames, key_file, template_name)
-
-    # Make sure template name doesn't already exist
-    # This might be necessary later when deciding if we're updating a template
-    # rather than creating a new one
+    # If template name already exists, run update instead
     #templates = json.loads(get_templates())
     #for t in templates:
     #    if t['filename'] == template_name:
-    #        raise Exception(template_name)
+    #        params = {
+    #            'template_name': template_name,
+    #            'required_filenames': required_filenames,
+    #            'key_file': key_file,
+    #            'script_file': script_file,
+    #            'diff_file': diff_file,
+    #            'review_params': review_params,
+    #            'instructor_files': instructor_files,
+    #            'instructor_files_names': instructor_files_names
+    #        }
+    #        if not update_template(t, params):
+    #            pass        # Error
+    #        return          # No error
+
+    # Make sure required pieces are present
+    if required_filenames == None or key_file == None or template_name == None:
+        raise Exception(required_filenames, key_file, template_name)
 
     # Rename files (except instructor files) for consistency
     # This way any previous files will be overwritten if the template is being edited
@@ -116,7 +126,6 @@ def add_template():
 
     # If necessary, create template directory
     save_path = TEMPLATES + template_name
-    print save_path
     try:
         if not os.path.exists(save_path):
             os.makedirs(save_path)
