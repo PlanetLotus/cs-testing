@@ -195,6 +195,9 @@
                 }
             }
 
+            // Removes any alerts that were there from previous clicks to edit 
+            $('.alert').remove();
+
             // Make sure the template was found
             if (jQuery.isEmptyObject(this.template)) {
                 alert('Template not found.');
@@ -211,25 +214,23 @@
             $('#indent-check').prop('checked', this.template.review_params.indent_check);
 
 
-
-            //TODO Could make it so it only puts one warnning up rather than just exiting 
-            //out of all of them as the user keeps hitting edit.
             
             // Puts warning signs when you edit a file that is blank.
-            if(this.template.script_file === "")
+            if(this.template.script_file != "")
             {
                 $('#input-script').before('<b class="alert alert-warning alert-dismissable"> Warning! <button type="button" class="close" data-dismiss="alert" >&times;</button> </b>'); 
+                
             }
 
-            if(this.template.key_file === "")
+            if(this.template.key_file != "")
             {
                 $('#output-key').before('<b class="alert alert-warning alert-dismissable"> Warning! <button type="button" class="close" data-dismiss="alert" >&times;</button> </b>'); 
             }
-            if(this.template.instructor_files === "")
+            if(this.template.instructor_files != "")
             {
                 $('#instructor-files').before('<b class="alert alert-warning alert-dismissable"> Warning! <button type="button" class="close" data-dismiss="alert" >&times;</button> </b>'); 
             }
-            if(this.template.diff_file === "")
+            if(this.template.diff_file != "")
             {
                 $('#diff-file').before('<b class="alert alert-warning alert-dismissable"> Warning! <button type="button" class="close" data-dismiss="alert" >&times;</button> </b>'); 
             }
