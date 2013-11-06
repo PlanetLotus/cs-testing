@@ -195,7 +195,7 @@
                 }
             }
 
-            // Removes any alerts that were there from previous clicks to edit 
+            // Removes any alerts that were there from previous clicks to edit
             $('.alert').remove();
 
             // Make sure the template was found
@@ -213,26 +213,42 @@
             $('#comment-check').prop('checked', this.template.review_params.comment_check);
             $('#indent-check').prop('checked', this.template.review_params.indent_check);
 
-
-            
             // Puts warning signs when you edit a file that is blank.
-            if(this.template.script_file != "")
+            if(this.template.script_file !== "")
             {
-                $('#input-script').before('<b class="alert alert-warning alert-dismissable"> Warning! <button type="button" class="close" data-dismiss="alert" >&times;</button> </b>'); 
-                
+                $('#input-script').after(
+                    '<div class="alert alert-warning alert-dismissable" style="width:50%">' +
+                        '<button type="button" class="close" data-dismiss="alert">&times;</button>' +
+                        'Warning! An input script for this template already exists. Choosing another file will overwrite this file.' +
+                    '</div>'
+                );
             }
-
-            if(this.template.key_file != "")
+            if(this.template.key_file !== "")
             {
-                $('#output-key').before('<b class="alert alert-warning alert-dismissable"> Warning! <button type="button" class="close" data-dismiss="alert" >&times;</button> </b>'); 
+                $('#output-key').after(
+                    '<div class="alert alert-warning alert-dismissable" style="width:50%">' +
+                        '<button type="button" class="close" data-dismiss="alert">&times;</button>' +
+                        'Warning! An output key for this template already exists. Choosing another file will overwrite this file.' +
+                    '</div>'
+                );
             }
-            if(this.template.instructor_files != "")
+            if(this.template.instructor_files !== "")
             {
-                $('#instructor-files').before('<b class="alert alert-warning alert-dismissable"> Warning! <button type="button" class="close" data-dismiss="alert" >&times;</button> </b>'); 
+                $('#instructor-files').after(
+                    '<div class="alert alert-warning alert-dismissable" style="width:50%">' +
+                        '<button type="button" class="close" data-dismiss="alert">&times;</button>' +
+                        'Warning! Instructor files for this template already exist. Choosing another file will overwrite these files.' +
+                    '</div>'
+                );
             }
-            if(this.template.diff_file != "")
+            if(this.template.diff_file !== "")
             {
-                $('#diff-file').before('<b class="alert alert-warning alert-dismissable"> Warning! <button type="button" class="close" data-dismiss="alert" >&times;</button> </b>'); 
+                $('#diff-file').after(
+                    '<div class="alert alert-warning alert-dismissable" style="width:50%">' +
+                        '<button type="button" class="close" data-dismiss="alert">&times;</button>' +
+                        'Warning! A diff file for this template already exists. Choosing another file will overwrite this file.' +
+                    '</div>'
+                );
             }
 
 
