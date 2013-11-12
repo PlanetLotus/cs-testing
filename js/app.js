@@ -18,6 +18,9 @@
     var graderSrc = $('#grader-template').html();
     var graderTpl = Handlebars.compile(graderSrc);
 
+    var programSrc = $('#program-template').html();
+    var programTpl = Handlebars.compile(programSrc);
+
     /*
      * Models
      */
@@ -293,6 +296,7 @@
     var GraderView = Backbone.View.extend({
         el: '#content',
         graderTpl: graderTpl,
+        programTpl: programTpl,
         selectedStudents: [],
         initialize: function(template, templates) {
 
@@ -423,9 +427,9 @@
 
             // Show/hide textareas
             $('.source-code').each( function() {
-                if ($(this).hasClass('in') && this.id != target)
+                if ($(this).hasClass('in') && $(this).attr('name') != target)
                     $(this).collapse('hide');
-                else if (!$(this).hasClass('in') && this.id == target) {
+                else if (!$(this).hasClass('in') && $(this).attr('name') == target) {
                     // This is super hacky...but necessary because .collapse
                     // adds in height: auto which doesn't work here when we need
                     // to specify a max-height for the div.
@@ -474,6 +478,22 @@
                     // Post-run data here
                     console.log('Successful program run!');
                     console.log(results);
+
+                    // Post output for FIRST USER ONLY at the moment
+                    // The current design restricts us to effectively showing only one user
+                    // This could be as simple as adding another nav list up top or similar
+                    this.results_context = { results: results[0] };
+
+                    // Load template with results context
+                    $('#run-program-results').append(programTpl(results[0]));
+
+                    // Thanks to Handlebars not supporting nested helpers,
+                    // we need to manually insert CSS into the first file instance
+                    if ( $('#source-nav li') ) {
+                        $('#source-nav li:first').addClass('active');
+                        var name = $('#source-nav li:first a').attr('name');
+                        $('div[name="' + name + '"]').addClass('in');
+                    }
                 },
                 error: function() {
                     console.log('Could not run program.');
