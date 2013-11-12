@@ -1,10 +1,10 @@
 .monospace {
     font-family: monospace;
+    white-space: pre;   /* keep this line to support earlier browsers */
+    white-space: pre-wrap;
 }
 
 .source-code {
     height: 250px;
     overflow: scroll;
-    white-space: pre;   /* keep this line to support earlier browsers */
-    white-space: pre-wrap;
 }
