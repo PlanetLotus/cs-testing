@@ -483,6 +483,28 @@
     });
 
     /*
+     * Handlebars Helpers
+     */
+    Handlebars.registerHelper('ifEquals', function(a, b, opts) {
+        if (a == b)
+            return opts.fn(this);
+        else
+            return opts.inverse(this);
+    });
+
+    Handlebars.registerHelper('eachProperty', function(context, options) {
+        var ret = "";
+        var count = 0;
+        for (var prop in context) {
+            if (context.hasOwnProperty(prop)) {
+                ret = ret + options.fn({ property: prop, value: context[prop] , index: count});
+                count++;
+            }
+        }
+        return ret;
+    });
+
+    /*
      * Router
      */
     var Router = Backbone.Router.extend({
