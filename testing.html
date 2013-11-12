@@ -176,11 +176,11 @@
         </ul>
 
         {{#eachProperty files}}
-        <div name="{{property}}" class="collapse source-code">{{value}}</div>
+        <div name="{{property}}" class="collapse source-code monospace">{{value}}</div>
         {{/eachProperty}}
 
         {{#if diff_file}}
-        <div name="diff_file" class="collapse source-code">{{diff_file}}</div>
+        <div name="diff_file" class="collapse source-code monospace">{{diff_file}}</div>
         {{/if}}
 
         <h2>Feedback</h2>
@@ -193,16 +193,17 @@
         </ul>
 
         <div id="output" class="collapse in feedback-text">
-            <textarea id="output-text" class="form-control monospace" rows="8"></textarea>
+            <!-- Needs to be on one line or else the CSS will parse the spaces -->
+            <textarea id="output-text" class="form-control monospace" rows="8">{{#if output}}{{output}}{{/if}}{{#if errors}}{{errors}}{{/if}}</textarea>
         </div>
         <div id="compile" class="collapse feedback-text">
-            <textarea class="form-control monospace" rows="8"></textarea>
+            <textarea class="form-control monospace" rows="8">{{#if compile}}{{compile}}{{/if}}</textarea>
         </div>
         <div id="review" class="collapse feedback-text">
-            <textarea class="form-control monospace" rows="8"></textarea>
+            <textarea class="form-control monospace" rows="8">{{#if review}}{{review}}{{/if}}</textarea>
         </div>
         <div id="key" class="collapse feedback-text">
-            <textarea class="form-control monospace" rows="8"></textarea>
+            <textarea class="form-control monospace" rows="8">{{#if key}}{{key}}{{/if}}</textarea>
         </div>
 
         <h2>Input</h2>
