@@ -194,15 +194,15 @@
         </ul>
 
         {{#eachProperty files}}
-        <div name="{{property}}" class="collapse source-code monospace">{{value}}</div>
+        <pre class="brush:{{../brush}} class-name:'collapse source-code {{property}}'">{{value}}</pre>
         {{/eachProperty}}
 
         {{#if diff_file}}
-        <div name="diff_file" class="collapse source-code monospace">{{diff_file}}</div>
+        <pre class="brush:diff class-name:'collapse source-code diff_file'">{{diff_file}}</pre>
         {{/if}}
 
         {{#eachProperty instructor_files}}
-        <div name="{{property}}" class="collapse source-code monospace">{{value}}</div>
+        <pre class="brush:{{../brush}} class-name:'collapse source-code {{property}}'">{{value}}</pre>
         {{/eachProperty}}
 
         <h2>Feedback</h2>
@@ -244,7 +244,10 @@
     <script type="text/javascript" src="js/handlebars.js"></script>
     <script type="text/javascript" src="js/bootstrap.min.js"></script>
     <script type="text/javascript" src="js/shCore.js"></script>
+    <script type="text/javascript" src="js/shBrushCpp.js"></script>
+    <script type="text/javascript" src="js/shBrushDiff.js"></script>
     <script type="text/javascript" src="js/shBrushPlain.js"></script>
+    <script type="text/javascript" src="js/shBrushPython.js"></script>
 
     <link rel="stylesheet" href="css/shCore.css">
     <link rel="stylesheet" href="css/shThemeDefault.css">

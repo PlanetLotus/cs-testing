@@ -336,16 +336,13 @@
             });
         },
         render: function() {
-            /* Example of code highlighting
-            var code = '<pre class="brush: plain">' +
-                        '// Test of highlighter\n' +
-                        'function foo() {\n' +
-                        '   var test = 0;\n' +
-                        '};\n' +
+            /*var code = '<pre class="brush: python">' +
+                        '# Test of highlighter\n' +
+                        'def foo():\n' +
+                        '   test = 0;\n' +
                         '</pre>';
             $(this.el).append(code);
-            SyntaxHighlighter.highlight();
-            */
+            SyntaxHighlighter.highlight();*/
 
             // Add template, classes, and student context
             var context = {
@@ -424,18 +421,14 @@
 
             // Get name of target
             var target = $(e.currentTarget).attr('name');
+            console.log(target);
 
-            // Show/hide textareas
+            // Show/hide code
             $('.source-code').each( function() {
-                if ($(this).hasClass('in') && $(this).attr('name') != target)
+                if ($(this).hasClass('in') && !$(this).hasClass(target))
                     $(this).collapse('hide');
-                else if (!$(this).hasClass('in') && $(this).attr('name') == target) {
-                    // This is super hacky...but necessary because .collapse
-                    // adds in height: auto which doesn't work here when we need
-                    // to specify a max-height for the div.
-                    $(this).removeAttr('style');
-                    $(this).addClass('in');
-                }
+                else if (!$(this).hasClass('in') && $(this).hasClass(target))
+                    $(this).collapse('show');
             });
         },
         feedbackNavClick: function(e) {
@@ -471,7 +464,7 @@
             $('.alert').remove();
 
             if (this.selectedStudents.length === 0 || jQuery.isEmptyObject(this.template)) {
-                $('#run-program').after('<div class="alert alert-danger"> Selection Error!</div>'); 
+                $('#run-program').after('<div class="alert alert-danger"> Selection Error!</div>');
                 return;
             }
 
@@ -495,12 +488,18 @@
                     // Load template with results context
                     $('#run-program-results').html(programTpl(results[0]));
 
+                    // Highlight syntax
+                    SyntaxHighlighter.highlight();
+
                     // Thanks to Handlebars not supporting nested helpers,
                     // we need to manually insert CSS into the first file instance
                     if ( $('#source-nav .source-item') ) {
                         $('#source-nav li.source-item:first').addClass('active');
-                        var name = $('#source-nav li.source-item:first a').attr('name');
-                        $('div[name="' + name + '"]').addClass('in');
+
+                        //var name = $('#source-nav li.source-item:first a').attr('name');
+                        //$('pre[name="' + name + '"]').addClass('in');
+
+                        $('.syntaxhighlighter:first').addClass('in');
                     }
                 },
                 error: function() {
