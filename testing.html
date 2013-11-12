@@ -166,12 +166,30 @@
         <button type="button" class="btn btn-primary pull-right">Toggle Diff</button>
 
         <ul id="source-nav" class="nav nav-tabs">
-            {{#eachProperty files}}
-            <li><a href="#" name="{{property}}">{{property}}</a></li>
-            {{/eachProperty}}
+            <li class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                    Student Files <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu">
+                    {{#eachProperty files}}
+                    <li class="source-item"><a href="#" name="{{property}}">{{property}}</a></li>
+                    {{/eachProperty}}
+                </ul>
+            </li>
+
+            <li class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                    Instructor Files <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu">
+                    {{#eachProperty instructor_files}}
+                    <li class="source-item"><a href="#" name="{{property}}">{{property}}</a></li>
+                    {{/eachProperty}}
+                </ul>
+            </li>
 
             {{#if diff_file}}
-            <li><a href="#" name="diff_file">diff_file</a></li>
+            <li class="source-item"><a href="#" name="diff_file">Diff File</a></li>
             {{/if}}
         </ul>
 
@@ -182,6 +200,10 @@
         {{#if diff_file}}
         <div name="diff_file" class="collapse source-code monospace">{{diff_file}}</div>
         {{/if}}
+
+        {{#eachProperty instructor_files}}
+        <div name="{{property}}" class="collapse source-code monospace">{{value}}</div>
+        {{/eachProperty}}
 
         <h2>Feedback</h2>
 

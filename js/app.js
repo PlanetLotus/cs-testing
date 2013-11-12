@@ -371,7 +371,7 @@
             'click #student-nav a': 'studentNavClick',
             'click .student-nest-nav a': 'studentNestNavClick',
             'click #template-nav a': 'selectTemplate',
-            'click #source-nav a': 'sourceNavClick',
+            'click #source-nav .source-item a': 'sourceNavClick',
             'click #feedback-nav a': 'feedbackNavClick',
             'click #run-program': 'runProgram'
         },
@@ -489,9 +489,9 @@
 
                     // Thanks to Handlebars not supporting nested helpers,
                     // we need to manually insert CSS into the first file instance
-                    if ( $('#source-nav li') ) {
-                        $('#source-nav li:first').addClass('active');
-                        var name = $('#source-nav li:first a').attr('name');
+                    if ( $('#source-nav .source-item') ) {
+                        $('#source-nav li.source-item:first').addClass('active');
+                        var name = $('#source-nav li.source-item:first a').attr('name');
                         $('div[name="' + name + '"]').addClass('in');
                     }
                 },
