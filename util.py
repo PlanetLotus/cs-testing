@@ -150,7 +150,7 @@ def get_files(template, student_name):
         if os.path.isfile(full_filename) and not f.startswith('.'):
             with open(full_filename, 'r') as open_file:
                 contents = open_file.read(MAX_FILE_SIZE)
-                student_file_contents[f] = contents
+                student_file_contents[f] = contents.strip('\r\n ')
 
     # Instructor files
     instructor_filenames = template['instructor_files']
@@ -159,7 +159,7 @@ def get_files(template, student_name):
         if os.path.isfile(full_filename) and not f.startswith('.'):
             with open(full_filename, 'r') as open_file:
                 contents = open_file.read(MAX_FILE_SIZE)
-                instructor_file_contents[f] = contents
+                instructor_file_contents[f] = contents.strip('\r\n ')
 
     # Diff file
     if template['diff_file']:
@@ -167,7 +167,7 @@ def get_files(template, student_name):
         if os.path.isfile(full_filename) and not f.startswith('.'):
             with open(full_filename, 'r') as open_file:
                 contents = open_file.read(MAX_FILE_SIZE)
-                diff_contents = contents
+                diff_contents = contents.strip('\r\n ')
 
     # Key file
     if template['key_file']:
@@ -175,7 +175,7 @@ def get_files(template, student_name):
         if os.path.isfile(full_filename) and not f.startswith('.'):
             with open(full_filename, 'r') as open_file:
                 contents = open_file.read(MAX_FILE_SIZE)
-                key_contents = contents
+                key_contents = contents.strip('\r\n ')
 
     return student_file_contents, instructor_file_contents, diff_contents, key_contents
 
