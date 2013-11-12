@@ -154,72 +154,85 @@
                     </div>
                 </div>
 
-                <div class="col-md-9">
-                    <h2>Source Code</h2>
-
-                    <button type="button" class="btn btn-primary pull-right">Toggle Diff</button>
-
-                    <ul id="source-nav" class="nav nav-tabs">
-                        <li class="active"><a href="#" name="filename.adb">filename.adb</a></li>
-                        <li><a href="#" name="filename.ads">filename.ads</a></li>
-                        <li><a href="#" name="diff">diff</a></li>
-                    </ul>
-
-                    <div id="filename.adb" class="collapse in source-code">
-                        <p>Placeholder Text</p>
-                        <p>Placeholder Text</p>
-                        <p>Placeholder Text</p>
-                        <p>Placeholder Text</p>
-                        <p>Placeholder Text</p>
-                        <p>Placeholder Text</p>
-                        <p>Placeholder Text</p>
-                        <p>Placeholder Text</p>
-                        <p>Placeholder Text</p>
-                        <p>Placeholder Text</p>
-                        <p>Placeholder Text</p>
-                        <p>Placeholder Text</p>
-                        <p>Placeholder Text</p>
-                        <p>Placeholder Text</p>
-                        <p>Placeholder Text</p>
-                        <p>Placeholder Text</p>
-                    </div>
-                    <div id="filename.ads" class="collapse source-code">
-                        <p>Placeholder Text 2</p>
-                    </div>
-                    <div id="diff" class="collapse source-code">
-                        <p>Placeholder Text 3</p>
-                    </div>
-
-                    <h2>Feedback</h2>
-
-                    <ul id="feedback-nav" class="nav nav-tabs">
-                        <li class="active"><a href="#" data-toggle="collapse" name="output">Output</a></li>
-                        <li><a href="#" name="compile">Compilation</a></li>
-                        <li><a href="#" name="review">Code Review</a></li>
-                        <li><a href="#" name="key">Key</a></li>
-                    </ul>
-
-                    <div id="output" class="collapse in feedback-text">
-                        <textarea id="output-text" class="form-control monospace" rows="8"></textarea>
-                    </div>
-                    <div id="compile" class="collapse feedback-text">
-                        <textarea class="form-control monospace" rows="8"></textarea>
-                    </div>
-                    <div id="review" class="collapse feedback-text">
-                        <textarea class="form-control monospace" rows="8"></textarea>
-                    </div>
-                    <div id="key" class="collapse feedback-text">
-                        <textarea class="form-control monospace" rows="8"></textarea>
-                    </div>
-
-                    <h2>Input</h2>
-
-                    <div class="input-group">
-                        <span class="input-group-addon">$</span>
-                        <input type="text" class="form-control monospace" placeholder="Command Prompt">
-                    </div>
+                <div class="col-md-9" id="run-program-results">
                 </div>
             </div>
+        </div>
+    </script>
+
+    <script id="program-template" type="text/x-handlebars-template">
+        <h2>Source Code</h2>
+
+        <button type="button" class="btn btn-primary pull-right">Toggle Diff</button>
+
+        <ul id="source-nav" class="nav nav-tabs">
+            <li class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                    Student Files <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu">
+                    {{#eachProperty files}}
+                    <li class="source-item"><a href="#" name="{{property}}">{{property}}</a></li>
+                    {{/eachProperty}}
+                </ul>
+            </li>
+
+            <li class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                    Instructor Files <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu">
+                    {{#eachProperty instructor_files}}
+                    <li class="source-item"><a href="#" name="{{property}}">{{property}}</a></li>
+                    {{/eachProperty}}
+                </ul>
+            </li>
+
+            {{#if diff_file}}
+            <li class="source-item"><a href="#" name="diff_file">Diff File</a></li>
+            {{/if}}
+        </ul>
+
+        {{#eachProperty files}}
+        <div name="{{property}}" class="collapse source-code monospace">{{value}}</div>
+        {{/eachProperty}}
+
+        {{#if diff_file}}
+        <div name="diff_file" class="collapse source-code monospace">{{diff_file}}</div>
+        {{/if}}
+
+        {{#eachProperty instructor_files}}
+        <div name="{{property}}" class="collapse source-code monospace">{{value}}</div>
+        {{/eachProperty}}
+
+        <h2>Feedback</h2>
+
+        <ul id="feedback-nav" class="nav nav-tabs">
+            <li class="active"><a href="#" data-toggle="collapse" name="output">Output</a></li>
+            <li><a href="#" name="compile">Compilation</a></li>
+            <li><a href="#" name="review">Code Review</a></li>
+            <li><a href="#" name="key">Key</a></li>
+        </ul>
+
+        <div id="output" class="collapse in feedback-text">
+            <!-- Needs to be on one line or else the CSS will parse the spaces -->
+            <textarea id="output-text" class="form-control monospace" rows="8">{{#if output}}{{output}}{{/if}}{{#if errors}}{{errors}}{{/if}}</textarea>
+        </div>
+        <div id="compile" class="collapse feedback-text">
+            <textarea class="form-control monospace" rows="8">{{#if compile}}{{compile}}{{/if}}</textarea>
+        </div>
+        <div id="review" class="collapse feedback-text">
+            <textarea class="form-control monospace" rows="8">{{#if review}}{{review}}{{/if}}</textarea>
+        </div>
+        <div id="key" class="collapse feedback-text">
+            <textarea class="form-control monospace" rows="8">{{#if key}}{{key}}{{/if}}</textarea>
+        </div>
+
+        <h2>Input</h2>
+
+        <div class="input-group">
+            <span class="input-group-addon">$</span>
+            <input type="text" class="form-control monospace" placeholder="Command Prompt">
         </div>
     </script>
 

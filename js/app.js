@@ -18,6 +18,9 @@
     var graderSrc = $('#grader-template').html();
     var graderTpl = Handlebars.compile(graderSrc);
 
+    var programSrc = $('#program-template').html();
+    var programTpl = Handlebars.compile(programSrc);
+
     /*
      * Models
      */
@@ -43,6 +46,8 @@
         instructor_files_count: 0,
         template: {},
         initialize: function() {
+            this.editTemplateClicked = false;
+
             // Load templates
             var that = this;
             this.templateList = new TemplateCollection();
@@ -74,7 +79,8 @@
             'change :file': 'uploadFile',
             'submit #template-form': 'saveTemplate',
             'click #load-template': 'loadTemplate',
-            'click #edit-template': 'editTemplate'
+            'click #edit-template': 'editTemplate',
+            'keyup #template-name': 'checkRequired'
         },
         selectTemplate: function(e) {
             // Don't navigate to link
@@ -178,7 +184,6 @@
             // Go to grader page
             window.location.href = baseUrl + '#grader';
         },
-
         editTemplate: function(e) {
             e.preventDefault();
 
@@ -186,6 +191,10 @@
             var selected_template = {};
             var selected_template_name = $('#template-table .success').text();
             if (!selected_template_name) return;
+
+            // Set flag
+            this.editTemplateClicked = true;
+            $('#output-key').removeAttr('required');
 
             // Find selected template based off its name
             for (var i=0; i<this.templateList.models.length; i++) {
@@ -195,7 +204,7 @@
                 }
             }
 
-            // Removes any alerts that were there from previous clicks to edit 
+            // Removes any alerts that were there from previous clicks to edit
             $('.alert').remove();
 
             // Make sure the template was found
@@ -213,47 +222,81 @@
             $('#comment-check').prop('checked', this.template.review_params.comment_check);
             $('#indent-check').prop('checked', this.template.review_params.indent_check);
 
-
-            
             // Puts warning signs when you edit a file that is blank.
-            if(this.template.script_file != "")
+            if(this.template.script_file !== "")
             {
-                $('#input-script').before('<b class="alert alert-warning alert-dismissable"> Warning! <button type="button" class="close" data-dismiss="alert" >&times;</button> </b>'); 
-                
+                $('#input-script').after(
+                    '<div class="alert alert-warning alert-dismissable" style="width:50%">' +
+                        '<button type="button" class="close" data-dismiss="alert">&times;</button>' +
+                        'Warning! An input script for this template already exists. Choosing another file will overwrite this file.' +
+                    '</div>'
+                );
             }
-
-            if(this.template.key_file != "")
+            if(this.template.key_file !== "")
             {
-                $('#output-key').before('<b class="alert alert-warning alert-dismissable"> Warning! <button type="button" class="close" data-dismiss="alert" >&times;</button> </b>'); 
+                $('#output-key').after(
+                    '<div class="alert alert-warning alert-dismissable" style="width:50%">' +
+                        '<button type="button" class="close" data-dismiss="alert">&times;</button>' +
+                        'Warning! An output key for this template already exists. Choosing another file will overwrite this file.' +
+                    '</div>'
+                );
             }
-            if(this.template.instructor_files != "")
+            if(this.template.instructor_files !== "")
             {
-                $('#instructor-files').before('<b class="alert alert-warning alert-dismissable"> Warning! <button type="button" class="close" data-dismiss="alert" >&times;</button> </b>'); 
+                $('#instructor-files').after(
+                    '<div class="alert alert-warning alert-dismissable" style="width:50%">' +
+                        '<button type="button" class="close" data-dismiss="alert">&times;</button>' +
+                        'Warning! Instructor files for this template already exist. Choosing another file will overwrite these files.' +
+                    '</div>'
+                );
             }
-            if(this.template.diff_file != "")
+            if(this.template.diff_file !== "")
             {
-                $('#diff-file').before('<b class="alert alert-warning alert-dismissable"> Warning! <button type="button" class="close" data-dismiss="alert" >&times;</button> </b>'); 
+                $('#diff-file').after(
+                    '<div class="alert alert-warning alert-dismissable" style="width:50%">' +
+                        '<button type="button" class="close" data-dismiss="alert">&times;</button>' +
+                        'Warning! A diff file for this template already exists. Choosing another file will overwrite this file.' +
+                    '</div>'
+                );
             }
-
-
-
-            //TODO Get file for the Output Key
-            /* This is tricky...it's not possible to have javascript autoselect
-             * a file for the user. All we can do is list the filename currently selected
-             * and then prompt the user for whether they want to change it.
-             * Then, we'd need to make sure the route would check to see if the user
-             * wanted to overwrite the file. Could do this by checking if the template already
-             * exists AND those file upload values are blank, then use the original value.
-             * Open to suggestions.
-             */
 
             console.log(this.template);
+        },
+        checkRequired: function() {
+            // Check to see if we need to validate template attributes client-side
+            // When not editing a template, we need to validate
+            // When editing a template, we specifically need to not check for an attribute's existence
+            // This is more processor-intensive than I'd like. If there's a better way of doing this, by all means
+            // Best I have right now is to only check it if editTemplate has been clicked
+            if (this.editTemplateClicked) {
+                // Need to check if we're still editing a template
+                // or if the template name changed to something other than one that already exists
+                // Ridiculous amount of processing, but at least you shouldn't
+                // be changing the template name a whole lot
+                var templates = this.templateList.models;
+                var filename = $('#template-name').val().trim();
+
+                // If template name doesn't exist, require output key
+                // else, remove required attr
+                for (var i=0; i<templates.length; i++) {
+                    if (templates[i].attributes.filename == filename) {
+                        $('#output-key').removeAttr('required');
+                        return;
+                    }
+                }
+
+                $('#output-key').attr('required', 'required');
+
+                // Reset flag
+                this.editTemplateClicked = false;
+            }
         }
     });
 
     var GraderView = Backbone.View.extend({
         el: '#content',
         graderTpl: graderTpl,
+        programTpl: programTpl,
         selectedStudents: [],
         initialize: function(template, templates) {
 
@@ -328,7 +371,7 @@
             'click #student-nav a': 'studentNavClick',
             'click .student-nest-nav a': 'studentNestNavClick',
             'click #template-nav a': 'selectTemplate',
-            'click #source-nav a': 'sourceNavClick',
+            'click #source-nav .source-item a': 'sourceNavClick',
             'click #feedback-nav a': 'feedbackNavClick',
             'click #run-program': 'runProgram'
         },
@@ -384,9 +427,9 @@
 
             // Show/hide textareas
             $('.source-code').each( function() {
-                if ($(this).hasClass('in') && this.id != target)
+                if ($(this).hasClass('in') && $(this).attr('name') != target)
                     $(this).collapse('hide');
-                else if (!$(this).hasClass('in') && this.id == target) {
+                else if (!$(this).hasClass('in') && $(this).attr('name') == target) {
                     // This is super hacky...but necessary because .collapse
                     // adds in height: auto which doesn't work here when we need
                     // to specify a max-height for the div.
@@ -423,41 +466,69 @@
                 template: this.template
             };
         
-            console.log(data);
-
             // Removes any alerts that were there from previous clicks to edit 
             $('.alert').remove();
 
-
-            // Check to see if a student and a template has bee selected
-            if(this.selectedStudents.length !== 0 && !jQuery.isEmptyObject(this.template))
-            { 
-        
-                data = JSON.stringify(data);
-
-                $.ajax({
-                    url: baseUrl + 'run-program/',
-                    async: false,
-                    type: 'POST',
-                    contentType: 'application/json',
-                    dataType: 'json',
-                    data: data,
-                    success: function(results) {
-                        // Post-run data here
-                        console.log('Successful program run!');
-                        console.log(results);
-                    },
-                    error: function() {
-                        console.log('Could not run program.');
-                    }
-                });
-            }
-            else 
-            {
+            if (this.selectedStudents.length === 0 || jQuery.isEmptyObject(this.template)) {
                 $('#run-program').after('<div class="alert alert-danger"> Selection Error!</div>'); 
-                return; 
+                return;
+            }
+
+            $.ajax({
+                url: baseUrl + 'run-program/',
+                async: false,
+                type: 'POST',
+                contentType: 'application/json',
+                dataType: 'json',
+                data: data,
+                success: function(results) {
+                    // Post-run data here
+                    console.log('Successful program run!');
+                    console.log(results);
+
+                    // Post output for FIRST USER ONLY at the moment
+                    // The current design restricts us to effectively showing only one user
+                    // This could be as simple as adding another nav list up top or similar
+                    this.results_context = { results: results[0] };
+
+                    // Load template with results context
+                    $('#run-program-results').html(programTpl(results[0]));
+
+                    // Thanks to Handlebars not supporting nested helpers,
+                    // we need to manually insert CSS into the first file instance
+                    if ( $('#source-nav .source-item') ) {
+                        $('#source-nav li.source-item:first').addClass('active');
+                        var name = $('#source-nav li.source-item:first a').attr('name');
+                        $('div[name="' + name + '"]').addClass('in');
+                    }
+                },
+                error: function() {
+                    console.log('Could not run program.');
+                }
+            });
+        }
+    });
+
+    /*
+     * Handlebars Helpers
+     */
+    Handlebars.registerHelper('ifEquals', function(a, b, opts) {
+        if (a == b)
+            return opts.fn(this);
+        else
+            return opts.inverse(this);
+    });
+
+    Handlebars.registerHelper('eachProperty', function(context, options) {
+        var ret = "";
+        var count = 0;
+        for (var prop in context) {
+            if (context.hasOwnProperty(prop)) {
+                ret = ret + options.fn({ property: prop, value: context[prop] , index: count});
+                count++;
             }
         }
+        return ret;
     });
 
     /*
