@@ -422,24 +422,41 @@
                 students: this.selectedStudents,
                 template: this.template
             };
-            data = JSON.stringify(data);
+        
+            console.log(data);
 
-            $.ajax({
-                url: baseUrl + 'run-program/',
-                async: false,
-                type: 'POST',
-                contentType: 'application/json',
-                dataType: 'json',
-                data: data,
-                success: function(results) {
-                    // Post-run data here
-                    console.log('Successful program run!');
-                    console.log(results);
-                },
-                error: function() {
-                    console.log('Could not run program.');
-                }
-            });
+            // Removes any alerts that were there from previous clicks to edit 
+            $('.alert').remove();
+
+
+            // Check to see if a student and a template has bee selected
+            if(this.selectedStudents.length !== 0 && !jQuery.isEmptyObject(this.template))
+            { 
+        
+                data = JSON.stringify(data);
+
+                $.ajax({
+                    url: baseUrl + 'run-program/',
+                    async: false,
+                    type: 'POST',
+                    contentType: 'application/json',
+                    dataType: 'json',
+                    data: data,
+                    success: function(results) {
+                        // Post-run data here
+                        console.log('Successful program run!');
+                        console.log(results);
+                    },
+                    error: function() {
+                        console.log('Could not run program.');
+                    }
+                });
+            }
+            else 
+            {
+                $('#run-program').after('<div class="alert alert-danger"> Selection Error!</div>'); 
+                return; 
+            }
         }
     });
 
