@@ -240,17 +240,21 @@ def run_program():
         # to be aware of.
         output = ''
         errors = ''
+        brush = 'diff'
         for f in required:
             # FIRST FILENAME IN REQUIRED FILES IS TREATED AS MAIN
             if f.endswith('.py'):
                 # Run Python code
                 output, errors = exec_py(EXEC + required[0], script_filepath)
+                brush = 'python'
                 break
             elif f.endswith('.c'):
                 # Compile C program
+                brush = 'c'
                 break
             elif f.endswith('.cpp') or f.endswith('.cxx'):
                 # Compile C++ program
+                brush = 'cpp'
                 break
 
         # Process review params and pass back results
@@ -267,7 +271,8 @@ def run_program():
                 'instructor_files': instructor_file_contents,
                 'diff_file': diff_contents,
                 'key': key_contents,
-                'review': ''
+                'review': '',
+                'brush': brush  # Brush name (for SyntaxHighlighter) of language used
         }
         results.append(student)
 
