@@ -465,8 +465,9 @@
                 students: this.selectedStudents,
                 template: this.template
             };
-        
-            // Removes any alerts that were there from previous clicks to edit 
+            data = JSON.stringify(data);
+
+            // Removes any alerts that were there from previous clicks to edit
             $('.alert').remove();
 
             if (this.selectedStudents.length === 0 || jQuery.isEmptyObject(this.template)) {
