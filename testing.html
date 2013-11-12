@@ -176,15 +176,11 @@
         </ul>
 
         {{#eachProperty files}}
-        <div name="{{property}}" class="collapse source-code">
-            <p>{{value}}</p>
-        </div>
+        <div name="{{property}}" class="collapse source-code">{{value}}</div>
         {{/eachProperty}}
 
         {{#if diff_file}}
-        <div name="diff_file" class="collapse source-code">
-            <p>{{diff_file}}</p>
-        </div>
+        <div name="diff_file" class="collapse source-code">{{diff_file}}</div>
         {{/if}}
 
         <h2>Feedback</h2>
