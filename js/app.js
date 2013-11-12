@@ -485,7 +485,7 @@
                     this.results_context = { results: results[0] };
 
                     // Load template with results context
-                    $('#run-program-results').append(programTpl(results[0]));
+                    $('#run-program-results').html(programTpl(results[0]));
 
                     // Thanks to Handlebars not supporting nested helpers,
                     // we need to manually insert CSS into the first file instance
