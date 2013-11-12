@@ -43,6 +43,8 @@
         instructor_files_count: 0,
         template: {},
         initialize: function() {
+            this.editTemplateClicked = false;
+
             // Load templates
             var that = this;
             this.templateList = new TemplateCollection();
@@ -74,7 +76,8 @@
             'change :file': 'uploadFile',
             'submit #template-form': 'saveTemplate',
             'click #load-template': 'loadTemplate',
-            'click #edit-template': 'editTemplate'
+            'click #edit-template': 'editTemplate',
+            'keyup #template-name': 'checkRequired'
         },
         selectTemplate: function(e) {
             // Don't navigate to link
@@ -178,7 +181,6 @@
             // Go to grader page
             window.location.href = baseUrl + '#grader';
         },
-
         editTemplate: function(e) {
             e.preventDefault();
 
@@ -186,6 +188,10 @@
             var selected_template = {};
             var selected_template_name = $('#template-table .success').text();
             if (!selected_template_name) return;
+
+            // Set flag
+            this.editTemplateClicked = true;
+            $('#output-key').removeAttr('required');
 
             // Find selected template based off its name
             for (var i=0; i<this.templateList.models.length; i++) {
@@ -251,19 +257,36 @@
                 );
             }
 
-
-
-            //TODO Get file for the Output Key
-            /* This is tricky...it's not possible to have javascript autoselect
-             * a file for the user. All we can do is list the filename currently selected
-             * and then prompt the user for whether they want to change it.
-             * Then, we'd need to make sure the route would check to see if the user
-             * wanted to overwrite the file. Could do this by checking if the template already
-             * exists AND those file upload values are blank, then use the original value.
-             * Open to suggestions.
-             */
-
             console.log(this.template);
+        },
+        checkRequired: function() {
+            // Check to see if we need to validate template attributes client-side
+            // When not editing a template, we need to validate
+            // When editing a template, we specifically need to not check for an attribute's existence
+            // This is more processor-intensive than I'd like. If there's a better way of doing this, by all means
+            // Best I have right now is to only check it if editTemplate has been clicked
+            if (this.editTemplateClicked) {
+                // Need to check if we're still editing a template
+                // or if the template name changed to something other than one that already exists
+                // Ridiculous amount of processing, but at least you shouldn't
+                // be changing the template name a whole lot
+                var templates = this.templateList.models;
+                var filename = $('#template-name').val().trim();
+
+                // If template name doesn't exist, require output key
+                // else, remove required attr
+                for (var i=0; i<templates.length; i++) {
+                    if (templates[i].attributes.filename == filename) {
+                        $('#output-key').removeAttr('required');
+                        return;
+                    }
+                }
+
+                $('#output-key').attr('required', 'required');
+
+                // Reset flag
+                this.editTemplateClicked = false;
+            }
         }
     });
 
