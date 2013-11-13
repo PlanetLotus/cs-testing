@@ -280,3 +280,12 @@ def run_program():
     # Empty exec directory
 
     return to_json(results)
+
+@route('/testing/delete-template/', method = "POST")
+def delete_template():
+    print request.json.keys()
+    try:
+     template_name = request.json['deleteTemplate']
+    except:
+      raise
+    shutil.rmtree(TEMPLATES + template_name)

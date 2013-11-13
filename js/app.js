@@ -80,7 +80,8 @@
             'submit #template-form': 'saveTemplate',
             'click #load-template': 'loadTemplate',
             'click #edit-template': 'editTemplate',
-            'keyup #template-name': 'checkRequired'
+            'keyup #template-name': 'checkRequired',
+            'click #delete-template': 'deleteTemplate'
         },
         selectTemplate: function(e) {
             // Don't navigate to link
@@ -290,6 +291,49 @@
                 // Reset flag
                 this.editTemplateClicked = false;
             }
+        },
+        deleteTemplate: function (e) {
+            e.preventDefault();
+
+            // Get selected template name
+            var selected_template = {};
+            var selected_template_name = $('#template-table .success').text();
+            if (!selected_template_name) return;
+
+            // Find selected template based off its name
+            for (var i=0; i<this.templateList.models.length; i++) {
+                if (this.templateList.models[i].attributes.filename == selected_template_name) {
+                    this.template = this.templateList.models[i].attributes;
+                    break;
+                }
+            }
+
+            // Make sure the template was found
+            if (jQuery.isEmptyObject(this.template)) {
+                alert('Template not found.');
+                return;
+            }
+            var that = this;
+            var data = {deleteTemplate: this.template.filename};
+            data = JSON.stringify(data);
+            //console.log(data);
+            $.ajax({
+                url: baseUrl + 'delete-template/',
+                async: false,
+                type: 'POST',
+                contentType: 'application/json',
+                dataType: 'json',
+                data: data,
+                success: function(results) {
+                    // Post-run data here
+                    that.initialize();
+                    console.log('Successful delete!');
+                },
+                error: function() {
+                    console.log('Could not delete');
+                }
+            });
+            console.log(this.template);
         }
     });
 
