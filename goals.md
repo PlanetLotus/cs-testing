@@ -9,7 +9,7 @@
 <ul>
     <li><del>Autopopulate list of templates</del></li>
     <li><del>Edit template</del></li>
-    <li>Delete template</li>
+    <li><del>Delete template</del></li>
     <li><del>Load template</del></li>
     <li><del>Save template</del></li>
     <li><del>Template overwrite warnings</del></li>
