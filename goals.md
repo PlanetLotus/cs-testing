@@ -12,7 +12,7 @@
     <li>Delete template</li>
     <li><del>Load template</del></li>
     <li><del>Save template</del></li>
-    <li>Template overwrite warnings</li>
+    <li><del>Template overwrite warnings</del></li>
     <li><del>Client-side validation</del></li>
 </ul>
 
@@ -23,8 +23,8 @@
     <li><del>Autopopulate list of templates</del></li>
     <li><del>Run program with one student selected</del></li>
     <li>Run program with multiple students selected</li>
-    <li>Populate textareas with dynamic response from server</li>
-    <li>Diff any two (or more??) files</li>
+    <li><del>Populate grader form with dynamic response from server</del></li>
+    <li>Diff any two files</li>
     <li>Client-side validation</li>
 </ul>
 
@@ -34,8 +34,8 @@
 
 <ul>
     <li><del>Return list of templates</del></li>
-    <li>Delete template</li>
-    <li>Update/<del>Save</del> template</li>
+    <li><del>Delete template</del></li>
+    <li><del>Update/Save template</del></li>
 </ul>
 
 <h3>Run Program Page</h3>
