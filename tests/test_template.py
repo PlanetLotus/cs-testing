@@ -1,5 +1,6 @@
 import unittest
 import os, sys
+import shutil
 
 # This isn't the Python way, but I couldn't figure out another way
 sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
@@ -24,7 +25,8 @@ class TestTemplate(unittest.TestCase):
         }
 
         # Create template directories
-        os.makedirs(TEMPLATES + template1['template_name'])
+        if not os.path.exists(TEMPLATES + template1['template_name']):
+            os.makedirs(TEMPLATES + template1['template_name'])
 
         # Create necessary files
         key_file1 = open(TEMPLATES + template1['template_name'] + '/output-key', 'w')
@@ -43,7 +45,7 @@ class TestTemplate(unittest.TestCase):
     @classmethod
     def tearDownClass(cls):
         # Delete template directories
-        pass
+        shutil.rmtree(TEMPLATES + 'unittest_template1')
 
     def test_add_template(self):
         self.assertEqual(0, 0)
