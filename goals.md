@@ -46,6 +46,20 @@
     <li><del>Run Python program</del></li>
 </ul>
 
+<h2>Other</h2>
+
+<h3>Documentation</h3>
+
+<ul>
+    <li>Sphinx</li>
+</ul>
+
+<h3>Automated Tests</h3>
+
+<ul>
+    <li>Unittest</li>
+</ul>
+
 <h2>Extras<h2>
 
 <p>These are low priority features that are outside our goals for this quarter.</p>
