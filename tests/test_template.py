@@ -48,4 +48,8 @@ class TestTemplate(unittest.TestCase):
         shutil.rmtree(TEMPLATES + 'unittest_template1')
 
     def test_add_template(self):
+        # Use these three functions to test various pieces of the add_template route
         self.assertEqual(0, 0)
+        self.assertTrue(1==1)
+        with self.assertRaises(ZeroDivisionError):
+            this_will_break = 5/0
