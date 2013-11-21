@@ -99,3 +99,16 @@ of this, but not sure if we have time for it this quarter. It was not a part of
 our design and it would require significant changes to our design. As such, we
 are making the backend support such a feature, but the frontend will be
 lacking.</p>
+
+<h3>Combine and Minify JS and CSS</h3>
+
+<p>This is purely for efficiency's sake. Production code should have JavaScript
+combined into one source then minified. Same for CSS. The "jsmin" library written
+for Python is pretty good...not as good as others, but it also doesn't require Java, 
+which is really nice...</p>
+
+<p>Additionally, this process should be automated when making changes live. The 
+development code should not be minified, but production code should be. This 
+necessitates a script that is run when changes are made live. A Bottle template 
+could be used to dynamically modify the HTML page to source the correct (minified or not) 
+files depending on whether it's on a dev or production server.</p>
