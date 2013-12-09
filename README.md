@@ -21,7 +21,7 @@ A local client-server program used for scripted testing of students' code.
 <h3>Frontend</h3>
 
 <ul>
-<li>HTML5</li>
+<li>HTML5 using <a target="_blank" href="http://handlebarsjs.com/">Handlebars templates</a></li>
 <li>CSS using <a target="_blank" href="http://getbootstrap.com/">Bootstrap 3</a></li>
 <li>JavaScript using <a target="_blank" href="http://backbonejs.org/">Backbone</a></li>
 </ul>
